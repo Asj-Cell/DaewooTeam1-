@@ -1,5 +1,7 @@
 # Compiled class file
 *.class
+# 모든 하위 폴더 포함
+**/node_modules/
 
 # Log file
 *.log
