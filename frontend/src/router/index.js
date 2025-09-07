@@ -3,7 +3,7 @@ import { createRouter, createWebHistory } from 'vue-router';
 const router = createRouter({
     history: createWebHistory(process.env.BASE_URL),
     routes: [
-        { path: '/',
+        {   path: '/',
             name: 'home',
             component: HomeView, // HomeView 컴포넌트
         },
@@ -15,59 +15,63 @@ const router = createRouter({
         {
             path: '/hoteldetail',
             name: 'hoteldetail',
-            component: HotelDetailView,
+            component: HotelDetailView, // HotelDetailView 컴포넌트
         },
         {
             path: '/paymentpage',
             name: 'paymentpage',
-            component: PaymentPageView,
+            component: PaymentPageView, // PaymentPageView 컴포넌트
         },
         {
-            path: '/',
-            name: '',
-            component: View,
+            path: '/favorites',
+            name: 'favorites',
+            component: FavoritesView, // FavoritesView 컴포넌트
         },
         {
-            path: '/',
-            name: '',
-            component: View,
+            path: '/account',
+            name: 'account',
+            component: AccountView, // AccountView 컴포넌트
         },
         {
-            path: '/',
-            name: '',
-            component: View,
+            path: '/reservation',
+            name: 'reservation',
+            component: ReservationView, // ReservationView 컴포넌트
         },
         {
-            path: '/',
-            name: '',
-            component: View,
+            path: '/paymentadd',
+            name: 'paymentadd',
+            component: PaymentAddView, // PaymentAddView 컴포넌트
         },
         {
-            path: '/',
-            name: '',
-            component: View,
+            path: '/login',
+            name: 'login',
+            component: LoginView, // LoginView 컴포넌트
         },
         {
-            path: '/',
-            name: '',
-            component: View,
+            path: '/signup',
+            name: 'signup',
+            component: SignUpView, // SignUpView 컴포넌트
         },
         {
-            path: '/',
-            name: '',
-            component: View,
+            path: '/firstpaymentadd',
+            name: 'firstpaymentadd',
+            component: FirstPaymentAddView, // FirstPaymentAddView 컴포넌트
         },
         {
-            path: '/',
-            name: '',
-            component: View,
+            path: '/findpw',
+            name: 'findpw',
+            component: FindpwView, // FindpwView 컴포넌트
         },
         {
-            path: '/',
-            name: '',
-            component: View,
+            path: '/identification',
+            name: 'identification',
+            component: IdentificationView, // IdentificationView 컴포넌트
         },
-
+        {
+            path: '/resetpw',
+            name: 'resetpw',
+            component: ResetpwView, // ResetpwView 컴포넌트
+        },
     ],
 });
 
