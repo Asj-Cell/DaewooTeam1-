@@ -17,7 +17,7 @@ public class Amenities {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "frontDesk24")
+    @Column(name = "front_desk24")
     private boolean frontDesk24;
 
     @Column(name = "outdoor_pool")
@@ -45,7 +45,7 @@ public class Amenities {
     private boolean teaCoffeeMachine;
 
     @Column(name = "airconditioning")
-    private boolean airconditioning;
+    private boolean airConditioner;
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "hotel_id")
