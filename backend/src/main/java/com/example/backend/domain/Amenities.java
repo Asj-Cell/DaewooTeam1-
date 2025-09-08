@@ -17,6 +17,9 @@ public class Amenities {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name = "frontDesk24")
+    private boolean frontDesk24;
+
     @Column(name = "outdoor_pool")
     private boolean outdoorPool;
 

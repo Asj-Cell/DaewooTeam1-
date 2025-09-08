@@ -17,7 +17,7 @@ public class Freebies {
     private Long id;
 
     @Column(name = "Breakfast_included")
-    private boolean BreakfastIncluded;
+    private boolean breakfastIncluded;
 
     @Column(name = "free_parking")
     private boolean freeParking;
@@ -26,7 +26,7 @@ public class Freebies {
     private boolean freeWifi;
 
     @Column(name = "Airport_shuttlebus")
-    private boolean AirportShuttlebus;
+    private boolean airportShuttlebus;
 
     @Column(name = "free_cancellation")
     private boolean freeCancellation;
