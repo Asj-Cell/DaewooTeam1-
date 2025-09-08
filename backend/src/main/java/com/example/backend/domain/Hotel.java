@@ -56,4 +56,11 @@ public class Hotel {
 
     @OneToMany(mappedBy = "hotel", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Room> rooms = new ArrayList<>();
+
+    @OneToOne(mappedBy = "hotel", cascade = CascadeType.ALL)
+    private Freebies freebies;
+
+    @OneToOne(mappedBy = "hotel", cascade = CascadeType.ALL)
+    private Amenities amenities;
+
 }
