@@ -50,7 +50,7 @@ public class HotelFiltersService {
                         h.getName(),
                         h.getCity().getCityName(),
                         h.getGrade(),
-                        countAmenities(h),
+//                        countAmenities(h),
                         getLowestPrice(h),
 //                         호텔 이미지를 출력해야함
                         getRepresentativeImage(h)
@@ -58,28 +58,28 @@ public class HotelFiltersService {
                 .collect(Collectors.toList());
     }
     //호텔이 가지고 있는 무료서비스,편의시설의 갯수를 카운트
-    private int countAmenities(Hotel h) {
-        int count = 0;
-
-        if (h.getFreebies().isBreakfastIncluded()) count++;
-        if (h.getFreebies().isFreeParking()) count++;
-        if (h.getFreebies().isFreeWifi()) count++;
-        if (h.getFreebies().isAirportShuttlebus()) count++;
-        if (h.getFreebies().isFreeCancellation()) count++;
-
-        if (h.getAmenities().isFrontDesk24()) count++;
-        if (h.getAmenities().isAirConditioner()) count++;
-        if (h.getAmenities().isFitnessCenter()) count++;
-        //호텔에 내부든 외부든 수영장이 있다면
-        if (h.getAmenities().isOutdoorPool() || h.getAmenities().isIndoorPool()) count++; // 풀장은 하나로 합치기
-        if (h.getAmenities().isSpaWellnessCenter()) count++;
-        if (h.getAmenities().isRestaurant()) count++;
-        if (h.getAmenities().isRoomservice()) count++;
-        if (h.getAmenities().isBarLounge()) count++;
-        if (h.getAmenities().isTeaCoffeeMachine()) count++;
-
-        return count;
-    }
+//    private int countAmenities(Hotel h) {
+//        int count = 0;
+//
+//        if (h.getFreebies().isBreakfastIncluded()) count++;
+//        if (h.getFreebies().isFreeParking()) count++;
+//        if (h.getFreebies().isFreeWifi()) count++;
+//        if (h.getFreebies().isAirportShuttlebus()) count++;
+//        if (h.getFreebies().isFreeCancellation()) count++;
+//
+//        if (h.getAmenities().isFrontDesk24()) count++;
+//        if (h.getAmenities().isAirConditioner()) count++;
+//        if (h.getAmenities().isFitnessCenter()) count++;
+//        //호텔에 내부든 외부든 수영장이 있다면
+//        if (h.getAmenities().isOutdoorPool() || h.getAmenities().isIndoorPool()) count++; // 풀장은 하나로 합치기
+//        if (h.getAmenities().isSpaWellnessCenter()) count++;
+//        if (h.getAmenities().isRestaurant()) count++;
+//        if (h.getAmenities().isRoomservice()) count++;
+//        if (h.getAmenities().isBarLounge()) count++;
+//        if (h.getAmenities().isTeaCoffeeMachine()) count++;
+//
+//        return count;
+//    }
 
     private BigDecimal getLowestPrice(Hotel h) {
         return h.getRooms().stream()
@@ -91,6 +91,4 @@ public class HotelFiltersService {
     private String getRepresentativeImage(Hotel h) {
         return "https://example.com/default-image.jpg";
     }
-
-
 }

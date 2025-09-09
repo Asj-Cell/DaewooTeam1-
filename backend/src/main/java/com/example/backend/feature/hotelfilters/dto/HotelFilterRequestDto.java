@@ -14,6 +14,8 @@ import java.math.BigDecimal;
  * 사용자가 입력하는 필터의 종류 dto
  */
 public class HotelFilterRequestDto {
+
+    private String cityName;
     //무료 서비스 필터
     private Boolean breakfastIncluded;   // 조식 포함
     private Boolean freeParking;         // 무료 주차
@@ -25,7 +27,7 @@ public class HotelFilterRequestDto {
     private Boolean frontDesk24;         // 24시 프론트데스크
     private Boolean airConditioner;      // 에어컨
     private Boolean fitnessCenter;       // 피트니스
-    private Boolean Pool;                // 수영장
+    private Boolean pool;                // 수영장
 
 
     private Integer minGrade;             // 최소 성급

@@ -8,6 +8,7 @@ import java.math.BigDecimal;
 
 /**
  * 두번째 페이지에 화면에 보여줄 호텔 정보들
+ * 별점과 찜 여부 보류
  */
 @Getter
 @NoArgsConstructor
@@ -17,7 +18,7 @@ public class HotelDto {
     private String name;
     private String cityName;
     private int grade;
-    private int amenitiesCount;
+//    private int amenitiesCount;
     private BigDecimal price;
     private String imageUrl;
 }

@@ -81,3 +81,9 @@ VALUES (1, 'https://example.com/images/malacca_tour_1.jpg'),
        (2, 'https://example.com/images/melbourne_journey.jpg'),
        (3, 'https://example.com/images/paris_adventure.jpg'),
        (4, 'https://example.com/images/london_classic.jpg');
+
+
+--=============
+-- 호텔 도시 필수값으로 지정
+--=============
+ALTER TABLE booking_db.hotel MODIFY COLUMN city_id bigint NOT NULL;
