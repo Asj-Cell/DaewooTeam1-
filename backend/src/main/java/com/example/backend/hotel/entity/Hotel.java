@@ -16,12 +16,16 @@ import java.util.List;
 @Getter@Setter
 @Entity
 @Table(name = "hotel")
+@NoArgsConstructor
 public class Hotel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "hotel_id")
+    @Column(name = "id")
     private Long id;
+
+    @Column(name = "name", nullable = false, length = 200)
+    private String name;
 
     @Column(name = "grade", nullable = false)
     private Double grade;

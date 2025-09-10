@@ -1,10 +1,20 @@
 package com.example.backend.hotel.entity;
 
-public class Room {
-<<<<<<< Updated upstream:backend/src/main/java/com/example/backend/domain/Room.java
-}
-=======
+import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
+import java.util.ArrayList;
+import java.util.List;
+
+
+@Getter
+@Setter
+@Entity // <--- 추가
+@Table(name = "room")
+@NoArgsConstructor
+public class Room {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -31,4 +41,3 @@ public class Room {
     @OneToMany(mappedBy = "room", cascade = CascadeType.ALL)
     private List<Reservation> reservations = new ArrayList<>();
 }
->>>>>>> Stashed changes:backend/src/main/java/com/example/backend/hotel/entity/Room.java

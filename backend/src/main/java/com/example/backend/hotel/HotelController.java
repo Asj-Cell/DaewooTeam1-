@@ -14,6 +14,9 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+
+// http://localhost:8888/api/hotels/search?destination=
+// 신라&checkInDate=2025-10-11&checkOutDate=2025-10-13&guestCount=2&page=0&size=4
 @Tag(name = "Hotel API", description = "호텔 관련 API")
 @RestController
 @RequestMapping("/api/hotels")

@@ -28,6 +28,5 @@ public class PackageImage {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "package_id", nullable = false)
-
     private TravelPackage travelPackage;
 }
