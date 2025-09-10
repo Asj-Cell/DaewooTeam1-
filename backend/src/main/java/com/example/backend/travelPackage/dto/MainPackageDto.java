@@ -18,6 +18,6 @@ public class MainPackageDto {
     private Long id;
     private String title;
     private String description;
-    private Double price;
+    private BigDecimal price;
     private List<String> imageUrls; // 모든 이미지 URL
 }

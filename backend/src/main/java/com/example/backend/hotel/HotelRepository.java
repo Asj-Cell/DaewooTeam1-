@@ -7,12 +7,13 @@ import com.example.backend.hotel.entity.Hotel;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import java.time.LocalDate;
 
-public interface HotelRepository extends JpaRepository<Hotel, Long> {
+public interface HotelRepository extends JpaRepository<Hotel, Long>, JpaSpecificationExecutor<Hotel> {
 
     @Query(value = "SELECT new com.example.backend.hotel.dto.HotelSearchResponseDto(" +
             "h.id, h.name, h.address, h.grade, hi.imageUrl, MIN(r.price)) " +

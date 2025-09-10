@@ -1,5 +1,6 @@
 package com.example.backend.feature.hotelfilters.dto;
 
+import com.example.backend.hotel.dto.HotelSearchRequestDto;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -13,7 +14,7 @@ import java.math.BigDecimal;
 /**
  * 사용자가 입력하는 필터의 종류 dto
  */
-public class HotelFilterRequestDto {
+public class HotelFilterRequestDto extends HotelSearchRequestDto {
     //무료 서비스 필터
     private Boolean breakfastIncluded;   // 조식 포함
     private Boolean freeParking;         // 무료 주차

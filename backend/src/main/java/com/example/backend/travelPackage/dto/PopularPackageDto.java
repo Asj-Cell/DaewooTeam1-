@@ -17,6 +17,6 @@ public class PopularPackageDto {
     private Long id;
     private String title;
     private String cityName;
-    private Double price;
+    private BigDecimal price;
     private String imageUrl;
 }
