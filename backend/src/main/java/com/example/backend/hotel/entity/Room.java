@@ -5,9 +5,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
-
 
 @Getter
 @Setter
@@ -20,7 +20,7 @@ public class Room {
     private Long id;
 
     @Column(name = "price", nullable = false)
-    private Double price;
+    private BigDecimal price;
 
     @Column(name = "name", nullable = false, length = 20)
     private String name;

@@ -1,6 +1,6 @@
 package com.example.backend.feature.hotelfilters;
 
-import com.example.backend.domain.Hotel;
+import com.example.backend.hotel.entity.Hotel;
 import com.example.backend.feature.hotelfilters.dto.HotelDto;
 import com.example.backend.feature.hotelfilters.dto.HotelFilterRequestDto;
 import com.example.backend.repository.HotelRepository;
