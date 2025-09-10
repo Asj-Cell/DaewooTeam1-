@@ -12,12 +12,12 @@ public class HotelSearchResponseDto {
     private Long hotelId;
     private String name;
     private String address;
-    private Double grade;
+    private BigDecimal grade;
     private String imageUrl;
-    private Double minPrice;
+    private BigDecimal minPrice;
 
     // JPQL에서 new 생성자를 사용하기 위한 생성자
-    public HotelSearchResponseDto(Long hotelId, String name, String address, Double grade, String imageUrl, Double minPrice) {
+    public HotelSearchResponseDto(Long hotelId, String name, String address, BigDecimal grade, String imageUrl, BigDecimal minPrice) {
         this.hotelId = hotelId;
         this.name = name;
         this.address = address;
