@@ -1,8 +1,10 @@
 package com.example.backend.repository;
 
-
 import com.example.backend.domain.Hotel;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
+import org.springframework.stereotype.Repository;
 
-public interface HotelRepository extends JpaRepository<Hotel, Long> {
+@Repository
+public interface HotelRepository extends JpaRepository<Hotel, Long>, JpaSpecificationExecutor<Hotel> {
 }
