@@ -1,22 +1,17 @@
 package com.example.backend.hotel.entity;
 
-
 import com.example.backend.domain.City;
 import jakarta.persistence.*;
-<<<<<<< Updated upstream:backend/src/main/java/com/example/backend/domain/Hotel.java
 import lombok.Getter;
 import lombok.Setter;
-=======
 import lombok.*;
-
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
-import lombok.Getter;
-import lombok.Setter;
 
->>>>>>> Stashed changes:backend/src/main/java/com/example/backend/hotel/entity/Hotel.java
+
+
 
 @Getter@Setter
 @Entity
@@ -28,10 +23,6 @@ public class Hotel {
     @Column(name = "hotel_id")
     private Long id;
 
-
-<<<<<<< Updated upstream:backend/src/main/java/com/example/backend/domain/Hotel.java
-}
-=======
     @Column(name = "grade", nullable = false)
     private Double grade;
 
@@ -63,5 +54,6 @@ public class Hotel {
 
     @OneToMany(mappedBy = "hotel", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<HotelImage> images = new ArrayList<>();
+
 }
->>>>>>> Stashed changes:backend/src/main/java/com/example/backend/hotel/entity/Hotel.java
+

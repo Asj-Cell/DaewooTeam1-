@@ -1,9 +1,17 @@
 package com.example.backend.hotel.entity;
 
+import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import java.math.BigDecimal;
+import java.time.LocalDate;
+
+@Getter @Setter
+@Entity
+@Table(name = "reservation")
+@NoArgsConstructor
 public class Reservation {
-<<<<<<< Updated upstream:backend/src/main/java/com/example/backend/domain/Reservation.java
-}
-=======
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,5 +36,9 @@ public class Reservation {
     @JoinColumn(name = "room_id", nullable = false)
     private Room room;
 
+
 }
->>>>>>> Stashed changes:backend/src/main/java/com/example/backend/hotel/entity/Reservation.java
+
+
+
+

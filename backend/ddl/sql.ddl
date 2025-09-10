@@ -10,11 +10,8 @@ CREATE USER 'user'@'localhost' IDENTIFIED BY '1234';
 GRANT ALL PRIVILEGES ON booking_db.* TO 'user'@'localhost';
 
 -- 4. 권한 적용
-<<<<<<< Updated upstream
 FLUSH PRIVILEGES;
-=======
-FLUSH
-PRIVILEGES;
+
 
 
 -- City 테이블 INSERT
@@ -65,4 +62,4 @@ INSERT INTO package_image (image_url, package_id) VALUES ('https://example.com/i
 INSERT INTO package_image (image_url, package_id) VALUES ('https://example.com/images/busan_haeundae.jpg', 2);
 INSERT INTO package_image (image_url, package_id) VALUES ('https://example.com/images/jeju_seongsan.jpg', 3);
 INSERT INTO package_image (image_url, package_id) VALUES ('https://example.com/images/gangneung_coffee.jpg', 4);
->>>>>>> Stashed changes
+

@@ -1,7 +1,4 @@
 package com.example.backend.domain;
-
-<<<<<<< Updated upstream
-=======
 import com.example.backend.hotel.entity.Hotel;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -15,6 +12,7 @@ import java.util.List;
 @Entity
 @Table(name = "city")
 @NoArgsConstructor
->>>>>>> Stashed changes
+
 public class City {
+
 }
