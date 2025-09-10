@@ -18,10 +18,10 @@ public class Reservation {
     private Long id;
 
     @Column(name = "check_in_date", nullable = false)
-    private LocalDate checkInDate;
+    private LocalDate checkinDate;
 
     @Column(name = "check_out_date", nullable = false)
-    private LocalDate checkOutDate;
+    private LocalDate checkoutDate;
 
 
     @Column(name = "discount", precision = 10, scale = 2)

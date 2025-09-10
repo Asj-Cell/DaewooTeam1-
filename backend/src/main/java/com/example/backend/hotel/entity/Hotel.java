@@ -4,6 +4,7 @@ import com.example.backend.domain.City;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,7 +27,7 @@ public class Hotel {
     private String name;
 
     @Column(name = "grade", nullable = false)
-    private int grade;
+    private Integer grade;
 
     @Column(name = "overview", length = 100, nullable = false)
     private String overview;
@@ -41,10 +42,10 @@ public class Hotel {
     private String address;
 
     @Column(name = "checkin_time", nullable = false)
-    private LocalDateTime checkinTime;
+    private LocalTime checkinTime;
 
     @Column(name = "checkout_time", nullable = false)
-    private LocalDateTime checkoutTime;
+    private LocalTime checkoutTime;
 
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -54,10 +55,12 @@ public class Hotel {
     @OneToMany(mappedBy = "hotel", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Room> rooms = new ArrayList<>();
 
+    @OneToMany(mappedBy = "hotel", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<HotelImage> images = new ArrayList<>();
+
     @OneToOne(mappedBy = "hotel", cascade = CascadeType.ALL)
     private Freebies freebies;
 
     @OneToOne(mappedBy = "hotel", cascade = CascadeType.ALL)
     private Amenities amenities;
-
 }

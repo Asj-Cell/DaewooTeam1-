@@ -16,8 +16,8 @@ public class HotelDto {
     private Long id;
     private String name;
     private String cityName;
-    private int grade;
-    private int amenitiesCount;
+    private Integer grade;
+    private Integer amenitiesCount;
     private BigDecimal price;
     private String imageUrl;
 }
