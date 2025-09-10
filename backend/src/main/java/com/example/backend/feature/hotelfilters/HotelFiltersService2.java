@@ -1,3 +1,8 @@
+
+
+
+//기존에 있던 find all (삭제 예정)
+
 //package com.example.backend.feature.hotelfilters;
 //
 //import com.example.backend.domain.Hotel;
