@@ -1,4 +1,4 @@
-package com.example.backend.domain;
+package com.example.backend.common;
 
 import com.example.backend.hotel.entity.Hotel; // 추가
 import com.example.backend.travelPackage.entity.TravelPackage; // 추가

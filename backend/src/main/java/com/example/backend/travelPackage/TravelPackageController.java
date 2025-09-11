@@ -31,5 +31,6 @@ public class TravelPackageController {
     public ResponseEntity<ApiResponse<MainPackageDto>> getMainPackage() {
         return ResponseEntity.ok(ApiResponse.success(travelPackageService.getMainPackage()));
     }
+
 }
 

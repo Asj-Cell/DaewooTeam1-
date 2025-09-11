@@ -1,7 +1,7 @@
 package com.example.backend.travelPackage.entity;
 
 
-import com.example.backend.domain.City;
+import com.example.backend.common.City;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
