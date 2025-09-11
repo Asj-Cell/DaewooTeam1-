@@ -92,6 +92,33 @@ VALUES (1, 'https://example.com/images/malacca_tour_1.jpg'),
        (3, 'https://example.com/images/paris_adventure.jpg'),
        (4, 'https://example.com/images/london_classic.jpg');
 
+-- 임시 유저 인서트
+INSERT INTO user (user_name, email, password, phone_number, address, birth_date, image_url) VALUES
+       ('김철수', 'chulsoo@example.com', 'password123', '010-1111-1111', '서울시 강남구', '1990-05-10', 'https://example.com/images/user1.jpg'),
+       ('이영희', 'younghee@example.com', 'password123', '010-2222-2222', '서울시 송파구', '1988-03-22', 'https://example.com/images/user2.jpg'),
+       ('박민수', 'minsu@example.com', 'password123', '010-3333-3333', '경기도 성남시', '1995-07-15', 'https://example.com/images/user3.jpg'),
+       ('최지은', 'jieun@example.com', 'password123', '010-4444-4444', '인천시 부평구', '1992-12-01', 'https://example.com/images/user4.jpg'),
+       ('정다은', 'daeun@example.com', 'password123', '010-5555-5555', '부산시 해운대구', '1998-06-30', 'https://example.com/images/user5.jpg'),
+       ('한성우', 'sungwoo@example.com', 'password123', '010-6666-6666', '대구시 수성구', '1991-11-11', 'https://example.com/images/user6.jpg'),
+       ('김하늘', 'haneul@example.com', 'password123', '010-7777-7777', '서울시 마포구', '1993-02-18', 'https://example.com/images/user7.jpg'),
+       ('이준호', 'junho@example.com', 'password123', '010-8888-8888', '경기도 고양시', '1996-09-05', 'https://example.com/images/user8.jpg'),
+       ('송민지', 'minji@example.com', 'password123', '010-9999-9999', '광주시 북구', '1994-04-20', 'https://example.com/images/user9.jpg'),
+       ('강태훈', 'taehoon@example.com', 'password123', '010-0000-0000', '대전시 유성구', '1989-08-12', 'https://example.com/images/user10.jpg');
+
+-- 임시 리뷰 인서트
+INSERT INTO review (user_id, content, user_rating_score, report_yn, hotel_id) VALUES
+          (1, '호텔이 깨끗하고 직원들이 친절했어요.', 4.5, FALSE, 1),
+          (2, '방이 조금 좁았지만 위치가 좋아요.', 4.0, FALSE, 1),
+          (3, '조식이 훌륭했고 서비스도 만족합니다.', 5.0, FALSE, 2),
+          (4, '주차 공간이 부족했어요.', 3.0, FALSE, 2),
+          (5, '청결은 좋았지만 소음이 심했습니다.', 3.5, FALSE, 3),
+          (1, '가격 대비 만족스러운 숙소였어요.', 4.2, FALSE, 3),
+          (2, '객실 내부 시설이 최신식이네요.', 4.8, FALSE, 1),
+          (3, '직원 응대가 친절하지 않았습니다.', 2.5, TRUE, 2),
+          (4, '뷰가 너무 좋고 다시 오고 싶어요.', 5.0, FALSE, 3),
+          (5, '인터넷 속도가 느려서 아쉬웠습니다.', 3.8, FALSE, 1);
+
+
 
 --=============
 -- 호텔 도시 필수값으로 지정
