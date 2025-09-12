@@ -1,5 +1,6 @@
 package com.example.backend.hotel.entity;
 
+import com.example.backend.amenities.entity.Amenities;
 import com.example.backend.common.City;
 import jakarta.persistence.*;
 import lombok.*;
@@ -10,7 +11,6 @@ import java.util.List;
 
 import lombok.Getter;
 import lombok.Setter;
-import java.time.LocalDateTime; // DB의 datetime 타입은 LocalDateTime으로 매핑하는 것이 표준입니다.
 
 @Getter @Setter
 @Entity

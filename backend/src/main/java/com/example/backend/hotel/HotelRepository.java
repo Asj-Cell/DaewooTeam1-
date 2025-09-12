@@ -1,4 +1,3 @@
-// backend/src/main/java/com/example/backend/hotel/HotelRepository.java
 
 package com.example.backend.hotel;
 
