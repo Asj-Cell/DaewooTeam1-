@@ -53,6 +53,9 @@ public class HotelFiltersService {
                             getRepresentativeImage(h)
                     );
                 })
+
+                .filter(dto -> request.getMinAvgRating() == null || dto.getRating() >= request.getMinAvgRating())
+
                 .sorted((h1, h2) -> {
                     // 정렬 기준에 따라 정렬
                     if ("rating".equalsIgnoreCase(request.getSortBy())) {
@@ -96,6 +99,7 @@ public class HotelFiltersService {
     }
 
     private boolean isRoomAvailable(Room room, LocalDate checkIn, LocalDate checkOut) {
+        if (checkIn == null || checkOut == null) return true;
         return room.getReservations().stream().noneMatch(reservation ->
                 reservation.getCheckinDate().isBefore(checkOut) &&
                         reservation.getCheckoutDate().isAfter(checkIn)

@@ -33,7 +33,7 @@ public class HotelFilterRequestDto {
     private Boolean fitnessCenter;
     private Boolean pool;
 
-    private Integer minGrade;
+    private Integer minAvgRating;
     private BigDecimal minPrice;
     private BigDecimal maxPrice;
 

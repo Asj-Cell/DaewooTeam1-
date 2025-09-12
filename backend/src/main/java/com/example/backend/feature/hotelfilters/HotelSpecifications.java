@@ -11,6 +11,7 @@ import jakarta.persistence.criteria.JoinType;
 import jakarta.persistence.criteria.Predicate;
 import org.springframework.data.jpa.domain.Specification;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,12 +33,18 @@ public class HotelSpecifications {
             Join<Room, Reservation> reservations = rooms.join("reservations", JoinType.LEFT);
 
             // === 예약 날짜 필터 ===
-            if (request.getCheckInDate() != null && request.getCheckOutDate() != null) {
+            LocalDate checkIn = request.getCheckInDate();
+            LocalDate checkOut = request.getCheckOutDate();
+
+            if (checkIn != null && checkOut != null) {
                 Predicate overlap = cb.and(
-                        cb.lessThan(reservations.get("checkinDate"), request.getCheckOutDate()),
-                        cb.greaterThan(reservations.get("checkoutDate"), request.getCheckInDate())
+                        cb.lessThan(reservations.get("checkinDate"), checkOut),
+                        cb.greaterThan(reservations.get("checkoutDate"), checkIn)
                 );
                 predicates.add(cb.or(cb.isNull(reservations.get("id")), cb.not(overlap)));
+            } else {
+                // 날짜가 null이면 예약 필터를 적용하지 않음
+                // -> 모든 방 조회 가능
             }
 
 
@@ -77,10 +84,10 @@ public class HotelSpecifications {
                 ));
             }
 
-            // === 등급 필터 ===
-            if (request.getMinGrade() != null) {
-                predicates.add(cb.greaterThanOrEqualTo(root.get("grade"), request.getMinGrade()));
-            }
+//            // === 등급 필터 === rating이 grade 인줄알고 실수
+//            if (request.getMinGrade() != null) {
+//                predicates.add(cb.greaterThanOrEqualTo(root.get("grade"), request.getMinGrade()));
+//            }
 
             // === 방 갯수 필터 ===
             if (request.getMinAvailableRooms() != null) {
