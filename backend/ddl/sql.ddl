@@ -203,6 +203,23 @@ VALUES (1, 1, 1, 0, 1, 1),
        (0, 0, 1, 1, 1, 4),
        (1, 1, 0, 0, 1, 5);
 
+-- 임시 편의시설 인서트
+INSERT INTO amenities (front_desk24, outdoor_pool, indoor_pool, spa_wellness_center, restaurant, roomservice, fitness_center, bar_lounge, tea_coffee_machine, airconditioning, hotel_id) VALUES
+          (1, 1, 0, 1, 1, 1, 1, 0, 1, 1, 1),
+          (1, 0, 0, 0, 1, 1, 0, 0, 1, 1, 2),
+          (1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 3),
+          (1, 0, 1, 0, 1, 0, 1, 1, 1, 1, 4),
+          (1, 1, 0, 0, 1, 1, 0, 0, 1, 1, 5);
+
+-- 임시 무료 서비스 인서트
+INSERT INTO freebies (Breakfast_included, free_parking, free_wifi, Airport_shuttlebus, free_cancellation, hotel_id) VALUES
+          (1, 1, 1, 0, 1, 1),
+          (1, 0, 1, 0, 1, 2),
+          (1, 1, 1, 1, 1, 3),
+          (0, 0, 1, 1, 1, 4),
+          (1, 1, 0, 0, 1, 5);
+
+
 
 
 --=============
