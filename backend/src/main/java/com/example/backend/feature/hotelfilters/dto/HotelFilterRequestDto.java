@@ -36,4 +36,6 @@ public class HotelFilterRequestDto {
     private Integer minGrade;
     private BigDecimal minPrice;
     private BigDecimal maxPrice;
+
+    private String sortBy; // "rating" / "priceAsc" / "priceDesc"
 }

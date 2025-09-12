@@ -8,6 +8,7 @@ import com.example.backend.hotel.entity.Room;
 import com.example.backend.review.ReviewRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
@@ -15,37 +16,60 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
 public class HotelFiltersService {
 
-        private final HotelRepository hotelRepository;
-        private final ReviewRepository reviewRepository; // 추가
+    private final HotelRepository hotelRepository;
+    private final ReviewRepository reviewRepository;
 
-        public Page<HotelDto> filterHotels(HotelFilterRequestDto request, Pageable pageable) {
-            Specification<Hotel> spec = HotelSpecifications.withFilters(request);
+    public Page<HotelDto> filterHotels(HotelFilterRequestDto request, Pageable pageable) {
+        // 1. Specification으로 DB에서 필터 적용
+        Specification<Hotel> spec = HotelSpecifications.withFilters(request);
 
-            Page<Hotel> hotelPage = hotelRepository.findAll(spec, pageable);
+        // 2. DB 조회 + 페이징 처리
+        Page<Hotel> hotelPage = hotelRepository.findAll(spec, pageable);
 
-            return hotelPage.map(h -> {
-                Double totalRating = reviewRepository.findTotalRatingByHotelId(h.getId());
-                long reviewCount = reviewRepository.countByHotelId(h.getId());
-                double avgRating = (totalRating != null && reviewCount > 0) ? totalRating / reviewCount : 0.0;
+        // 3. DTO 변환 + 정렬
+        List<HotelDto> sortedDtos = hotelPage.stream()
+                .map(h -> {
+                    // 리뷰 기반 평점 계산
+                    Double totalRating = reviewRepository.findTotalRatingByHotelId(h.getId());
+                    long reviewCount = reviewRepository.countByHotelId(h.getId());
+                    double avgRating = (totalRating != null && reviewCount > 0) ? totalRating / reviewCount : 0.0;
 
-                return new HotelDto(
-                        h.getId(),
-                        h.getName(),
-                        h.getCity().getCityName(),
-                        h.getGrade(),
-                        countAmenities(h),
-                        getLowestAvailablePrice(h, request),
-                        avgRating,
-                        getRepresentativeImage(h)
-                );
-            });
-        }
+                    return new HotelDto(
+                            h.getId(),
+                            h.getName(),
+                            h.getCity().getCityName(),
+                            h.getGrade(),
+                            countAmenities(h),
+                            getLowestAvailablePrice(h, request),
+                            avgRating,
+                            getRepresentativeImage(h)
+                    );
+                })
+                .sorted((h1, h2) -> {
+                    // 정렬 기준에 따라 정렬
+                    if ("rating".equalsIgnoreCase(request.getSortBy())) {
+                        return Double.compare(h2.getRating(), h1.getRating()); // 평점 내림차순
+                    } else if ("priceAsc".equalsIgnoreCase(request.getSortBy())) {
+                        return h1.getPrice().compareTo(h2.getPrice());       // 가격 오름차순
+                    } else if ("priceDesc".equalsIgnoreCase(request.getSortBy())) {
+                        return h2.getPrice().compareTo(h1.getPrice());       // 가격 내림차순
+                    } else {
+                        return 0; // 기본: DB 순서, 아마 아이디 순으로 조회될겁니다
+                    }
+                })
+                .collect(Collectors.toList());
+
+        // 4. Stream 정렬 후 새 Page 객체 생성
+        return new PageImpl<>(sortedDtos, pageable, hotelPage.getTotalElements());
+    }
 
     // 호텔이 가지고 있는 무료서비스 + 편의시설 카운트
     private int countAmenities(Hotel h) {
