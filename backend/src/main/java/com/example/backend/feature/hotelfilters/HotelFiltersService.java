@@ -75,8 +75,7 @@ public class HotelFiltersService {
     private BigDecimal getLowestAvailablePrice(Hotel h, HotelFilterRequestDto request) {
         return h.getRooms().stream()
                 .filter(r -> isRoomAvailable(r, request.getCheckInDate(), request.getCheckOutDate()))
-                .filter(r -> (request.getMinPrice() == null || r.getPrice().compareTo(request.getMinPrice()) >= 0) &&
-                        (request.getMaxPrice() == null || r.getPrice().compareTo(request.getMaxPrice()) <= 0))
+                .filter(r -> request.getMinAvailableRooms() == null || r.getMaxGuests() >= request.getMinAvailableRooms())
                 .map(Room::getPrice)
                 .min(BigDecimal::compareTo)
                 .orElse(BigDecimal.ZERO);

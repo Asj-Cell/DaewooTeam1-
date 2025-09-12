@@ -41,11 +41,6 @@ public class HotelSpecifications {
             }
 
 
-            if (request.getMinAvailableRooms() != null) {
-                query.groupBy(root.get("id"));
-                query.having(cb.ge(cb.count(rooms.get("id")), request.getMinAvailableRooms()));
-            }
-
             // === Freebies 필터 ===
             Join<Hotel, Freebies> freebies = root.join("freebies", JoinType.LEFT);
             if (Boolean.TRUE.equals(request.getBreakfastIncluded())) {
@@ -86,6 +81,13 @@ public class HotelSpecifications {
             if (request.getMinGrade() != null) {
                 predicates.add(cb.greaterThanOrEqualTo(root.get("grade"), request.getMinGrade()));
             }
+
+            // === 방 갯수 필터 ===
+            if (request.getMinAvailableRooms() != null) {
+                predicates.add(cb.greaterThanOrEqualTo(rooms.get("maxGuests"), request.getMinAvailableRooms()));
+            }
+
+
 
             // === 가격 필터 ===
             if (request.getMinPrice() != null) {
