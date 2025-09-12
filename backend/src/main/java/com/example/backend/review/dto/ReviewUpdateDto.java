@@ -5,9 +5,7 @@ import lombok.NoArgsConstructor;
 
 @Getter
 @NoArgsConstructor
-public class ReviewRequestDto {
-    private Long userId; // 리뷰를 작성하는 사용자의 ID
+public class ReviewUpdateDto {
     private String content;
     private Double userRatingScore;
-
 }

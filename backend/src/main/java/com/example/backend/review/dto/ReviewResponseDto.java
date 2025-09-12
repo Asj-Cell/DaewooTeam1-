@@ -8,7 +8,7 @@ public class ReviewResponseDto {
     private final String userName;
     private final String content;
     private final Double userRatingScore;
-    private final String imageUrl; // 사용자 프로필 이미지
+    private final String imageUrl; // 사용자 프로필 이미지 url ...
 
     public ReviewResponseDto(Review review) {
         this.userName = review.getUser().getUserName();
