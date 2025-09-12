@@ -43,6 +43,9 @@ public class User {
     @Column(name = "image_url",length = 255)
     private String imageUrl;
 
+    @Column(name = "background_image_url",length = 255)
+    private String backGroundImageUrl;
+
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Review> reviews = new ArrayList<>();
 }
