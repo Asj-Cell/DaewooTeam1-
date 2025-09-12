@@ -5,6 +5,7 @@ import com.example.backend.feature.hotelfilters.dto.HotelDto;
 import com.example.backend.feature.hotelfilters.dto.HotelFilterRequestDto;
 import com.example.backend.hotel.HotelRepository;
 import com.example.backend.hotel.entity.Room;
+import com.example.backend.review.ReviewRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -20,26 +21,31 @@ import java.time.LocalDate;
 @Transactional(readOnly = true)
 public class HotelFiltersService {
 
-    private final HotelRepository hotelRepository;
+        private final HotelRepository hotelRepository;
+        private final ReviewRepository reviewRepository; // 추가
 
-    public Page<HotelDto> filterHotels(HotelFilterRequestDto request, Pageable pageable) {
-        // Specification으로 DB에서 필터 적용
-        Specification<Hotel> spec = HotelSpecifications.withFilters(request);
+        public Page<HotelDto> filterHotels(HotelFilterRequestDto request, Pageable pageable) {
+            Specification<Hotel> spec = HotelSpecifications.withFilters(request);
 
-        // DB에서 필터 + 페이징 처리
-        Page<Hotel> hotelPage = hotelRepository.findAll(spec, pageable);
+            Page<Hotel> hotelPage = hotelRepository.findAll(spec, pageable);
 
-        // DTO 변환
-        return hotelPage.map(h -> new HotelDto(
-                h.getId(),
-                h.getName(),
-                h.getCity().getCityName(),
-                h.getGrade(),
-                countAmenities(h),
-                getLowestAvailablePrice(h, request),
-                getRepresentativeImage(h)
-        ));
-    }
+            return hotelPage.map(h -> {
+                Double totalRating = reviewRepository.findTotalRatingByHotelId(h.getId());
+                long reviewCount = reviewRepository.countByHotelId(h.getId());
+                double avgRating = (totalRating != null && reviewCount > 0) ? totalRating / reviewCount : 0.0;
+
+                return new HotelDto(
+                        h.getId(),
+                        h.getName(),
+                        h.getCity().getCityName(),
+                        h.getGrade(),
+                        countAmenities(h),
+                        getLowestAvailablePrice(h, request),
+                        avgRating,
+                        getRepresentativeImage(h)
+                );
+            });
+        }
 
     // 호텔이 가지고 있는 무료서비스 + 편의시설 카운트
     private int countAmenities(Hotel h) {
@@ -87,3 +93,4 @@ public class HotelFiltersService {
         return "https://example.com/default-image.jpg";
     }
 }
+

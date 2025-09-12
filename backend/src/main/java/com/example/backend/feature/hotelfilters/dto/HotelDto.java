@@ -20,5 +20,6 @@ public class HotelDto {
     private Integer grade;
     private Integer amenitiesCount;
     private BigDecimal price;
+    private Double rating;
     private String imageUrl;
 }
