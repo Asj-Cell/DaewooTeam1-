@@ -35,7 +35,7 @@ public class HotelFiltersController {
      * @return : 호텔 리스트 + 전체 호텔 수
      *
      *
-     * http://localhost:8818/api/hotels/filter?page=0&size=4 주소
+     * http://localhost:8888/api/hotels/filter?page=0&size=4 주소
      *
      * 모든 조건, 임시(아이디 순으로) 첫번째 페이지에 4개씩 불러오는
      * {

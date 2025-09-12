@@ -4,6 +4,7 @@ import com.example.backend.hotel.entity.Hotel;
 import com.example.backend.feature.hotelfilters.dto.HotelDto;
 import com.example.backend.feature.hotelfilters.dto.HotelFilterRequestDto;
 import com.example.backend.hotel.HotelRepository;
+import com.example.backend.hotel.entity.Room;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -12,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 
 @Service
 @RequiredArgsConstructor
@@ -34,7 +36,7 @@ public class HotelFiltersService {
                 h.getCity().getCityName(),
                 h.getGrade(),
                 countAmenities(h),
-                getLowestPrice(h),
+                getLowestAvailablePrice(h, request),
                 getRepresentativeImage(h)
         ));
     }
@@ -63,12 +65,23 @@ public class HotelFiltersService {
         return count;
     }
 
-    private BigDecimal getLowestPrice(Hotel h) {
+    private boolean isRoomAvailable(Room room, LocalDate checkIn, LocalDate checkOut) {
+        return room.getReservations().stream().noneMatch(reservation ->
+                reservation.getCheckinDate().isBefore(checkOut) &&
+                        reservation.getCheckoutDate().isAfter(checkIn)
+        );
+    }
+
+    private BigDecimal getLowestAvailablePrice(Hotel h, HotelFilterRequestDto request) {
         return h.getRooms().stream()
-                .map(r -> r.getPrice())
+                .filter(r -> isRoomAvailable(r, request.getCheckInDate(), request.getCheckOutDate()))
+                .filter(r -> (request.getMinPrice() == null || r.getPrice().compareTo(request.getMinPrice()) >= 0) &&
+                        (request.getMaxPrice() == null || r.getPrice().compareTo(request.getMaxPrice()) <= 0))
+                .map(Room::getPrice)
                 .min(BigDecimal::compareTo)
                 .orElse(BigDecimal.ZERO);
     }
+
 
     private String getRepresentativeImage(Hotel h) {
         // 임시 이미지
