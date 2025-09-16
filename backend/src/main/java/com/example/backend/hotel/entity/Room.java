@@ -19,6 +19,9 @@ public class Room {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name = "room_number", nullable = false, length = 10)
+    private String roomNumber;
+
     @Column(name = "price", nullable = false)
     private BigDecimal price;
 
