@@ -16,7 +16,7 @@ import java.math.BigDecimal;
 public class HotelDto {
     private Long id;
     private String name;
-    private String cityName;
+    private String address;
     private Integer grade;
     private Integer amenitiesCount;
     private BigDecimal price;

@@ -53,6 +53,10 @@ public class HotelFiltersController {
      *   "maxprice": null,
      *   "page": 0,
      *   "size": 4
+     *
+     *
+     *
+     *   정렬관련 손다시 봐야함
      * }
      */
 

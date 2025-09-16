@@ -45,7 +45,7 @@ public class HotelFiltersService {
                     return new HotelDto(
                             h.getId(),
                             h.getName(),
-                            h.getCity().getCityName(),
+                            h.getAddress(),
                             h.getGrade(),
                             countAmenities(h),
                             getLowestAvailablePrice(h, request),
