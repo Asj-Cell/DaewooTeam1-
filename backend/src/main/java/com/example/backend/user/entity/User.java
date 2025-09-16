@@ -1,6 +1,6 @@
 package com.example.backend.user.entity;
 
-
+import com.example.backend.hotel.entity.Reservation;
 import com.example.backend.review.entity.Review;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -46,6 +46,9 @@ public class User {
     @Column(name = "background_image_url",length = 255)
     private String backGroundImageUrl;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL,orphanRemoval = true)
     private List<Review> reviews = new ArrayList<>();
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL,orphanRemoval = true)
+    private List<Reservation> reservations = new ArrayList<>();
 }
