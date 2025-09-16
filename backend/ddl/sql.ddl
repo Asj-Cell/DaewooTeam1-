@@ -19,96 +19,60 @@ PRIVILEGES;
 
 
 -- City 테이블 INSERT
-INSERT INTO city (city_name)
-VALUES ('서울');
-INSERT INTO city (city_name)
-VALUES ('부산');
-INSERT INTO city (city_name)
-VALUES ('제주');
-INSERT INTO city (city_name)
-VALUES ('강릉');
-INSERT INTO city (city_name)
-VALUES ('경주');
+INSERT INTO city (city_name) VALUES
+                                 ('서울'),
+                                 ('부산'),
+                                 ('제주'),
+                                 ('인천'),
+                                 ('경주');
 
 -- Hotel 테이블 INSERT (checkin_time, checkout_time을 TIME 형식으로 수정)
-INSERT INTO hotel (name, grade, overview, latitude, longitude, address, checkin_time, checkout_time, city_id)
-VALUES ('신라호텔', 5.0, '최고급 시설과 서비스를 자랑하는 서울의 랜드마크 호텔', 37.5558, 127.0053, '서울 중구 동호로 249', '15:00:00', '11:00:00', 1);
-INSERT INTO hotel (name, grade, overview, latitude, longitude, address, checkin_time, checkout_time, city_id)
-VALUES ('파라다이스 호텔 부산', 4.8, '해운대 해변 바로 앞에 위치한 럭셔리 리조트', 35.159, 129.159, '부산 해운대구 해운대해변로 296', '15:00:00', '11:00:00',
-        2);
-INSERT INTO hotel (name, grade, overview, latitude, longitude, address, checkin_time, checkout_time, city_id)
-VALUES ('롯데호텔 제주', 4.5, '중문관광단지에 위치한 가족 친화적인 리조트 호텔', 33.249, 126.409, '제주 서귀포시 중문관광로72번길 35', '15:00:00', '11:00:00',
-        3);
-INSERT INTO hotel (name, grade, overview, latitude, longitude, address, checkin_time, checkout_time, city_id)
-VALUES ('세인트존스 호텔', 4.2, '강문 해변의 멋진 전망을 자랑하는 강릉의 인기 호텔', 37.794, 128.92, '강원 강릉시 창해로 307', '15:00:00', '11:00:00', 4);
-INSERT INTO hotel (name, grade, overview, latitude, longitude, address, checkin_time, checkout_time, city_id)
-VALUES ('힐튼 경주', 4.6, '보문호수 옆에 자리한 경주의 대표적인 특급 호텔', 35.839, 129.28, '경북 경주시 보문로 484-7', '15:00:00', '11:00:00', 5);
-
+INSERT INTO hotel (name, grade, overview, latitude, longitude, address, checkin_time, checkout_time, city_id) VALUES
+                                                                                                                  ('신라호텔', 5, '최고급 호텔', 37.5558, 127.0053, '서울시 중구 동호로 249', '15:00:00', '12:00:00', 1),
+                                                                                                                  ('파라다이스 호텔 부산', 5, '해운대 해변에 위치한 럭셔리 호텔', 35.1598, 129.1603, '부산시 해운대구 해운대해변로 296', '15:00:00', '11:00:00', 2),
+                                                                                                                  ('롯데호텔 제주', 5, '중문관광단지에 위치한 리조트형 호텔', 33.2476, 126.4107, '제주특별자치도 서귀포시 중문관광로72번길 35', '14:00:00', '11:00:00', 3),
+                                                                                                                  ('경원재 앰배서더 인천', 5, '한옥 호텔', 37.3947, 126.6384, '인천시 연수구 테크노파크로 200', '15:00:00', '11:00:00', 4),
+                                                                                                                  ('힐튼 경주', 5, '보문호수에 위치한 호텔', 35.8400, 129.2818, '경북 경주시 보문로 484-7', '15:00:00', '11:00:00', 5);
 -- Hotel_Image 테이블 INSERT
-INSERT INTO hotel_image (image_url, size, sequence, hotel_id)
-VALUES ('https://example.com/images/shilla_main.jpg', 1200, 1, 1);
-INSERT INTO hotel_image (image_url, size, sequence, hotel_id)
-VALUES ('https://example.com/images/shilla_sub1.jpg', 800, 2, 1);
-INSERT INTO hotel_image (image_url, size, sequence, hotel_id)
-VALUES ('https://example.com/images/paradise_main.jpg', 1500, 1, 2);
-INSERT INTO hotel_image (image_url, size, sequence, hotel_id)
-VALUES ('https://example.com/images/lotte_jeju_main.jpg', 1350, 1, 3);
-INSERT INTO hotel_image (image_url, size, sequence, hotel_id)
-VALUES ('https://example.com/images/stjohns_main.jpg', 1100, 1, 4);
+INSERT INTO hotel_image (image_url, size, sequence, hotel_id) VALUES
+                                                                  ('http://example.com/images/shilla_hotel_1.jpg', 1024, 1, 11),
+                                                                  ('http://example.com/images/paradise_busan_1.jpg', 2048, 1, 12),
+                                                                  ('http://example.com/images/lotte_jeju_1.jpg', 1536, 1, 13),
+                                                                  ('http://example.com/images/gyeongwonjae_incheon_1.jpg', 1280, 1, 14),
+                                                                  ('http://example.com/images/hilton_gyeongju_1.jpg', 1800, 1, 15);
 
 -- Room 테이블 INSERT
-INSERT INTO room (price, name, view, bed, max_guests, hotel_id)
-VALUES (350000.00, '디럭스 룸', '시티 뷰', '더블 베드 1개', 2, 1);
-INSERT INTO room (price, name, view, bed, max_guests, hotel_id)
-VALUES (450000.00, '이그제큐티브 룸', '남산 뷰', '킹 베드 1개', 2, 1);
-INSERT INTO room (price, name, view, bed, max_guests, hotel_id)
-VALUES (280000.00, '오션 테라스 룸', '오션 뷰', '더블 베드 2개', 4, 2);
-INSERT INTO room (price, name, view, bed, max_guests, hotel_id)
-VALUES (220000.00, '디럭스 가든 룸', '가든 뷰', '퀸 베드 1개', 2, 3);
-INSERT INTO room (price, name, view, bed, max_guests, hotel_id)
-VALUES (180000.00, '슈페리어 더블', '오션 뷰', '더블 베드 1개', 2, 4);
+INSERT INTO room (room_number, price, name, view, bed, max_guests, hotel_id) VALUES
+                                                                                 ('101', 300000, '디럭스 룸', '시티 뷰', '더블', 2, 11),
+                                                                                 ('202', 450000, '스위트 룸', '오션 뷰', '킹', 3, 12),
+                                                                                 ('303', 250000, '패밀리 룸', '가든 뷰', '트윈', 4, 13),
+                                                                                 ('404', 350000, '이그제큐티브 룸', '파크 뷰', '퀸', 2, 14),
+                                                                                 ('505', 200000, '스탠다드 룸', '마운틴 뷰', '싱글', 1, 15);
+
 
 -- Reservation 테이블 INSERT (수정된 컬럼명 적용)
-INSERT INTO reservation (check_in_date, check_out_date, discount, taxes, total_price, room_id)
-VALUES ('2025-10-10', '2025-10-15', 0.00, 35000.00, 385000.00, 1);
-INSERT INTO reservation (check_in_date, check_out_date, discount, taxes, total_price, room_id)
-VALUES ('2025-11-01', '2025-11-03', 10000.00, 27000.00, 297000.00, 3);
-INSERT INTO reservation (check_in_date, check_out_date, discount, taxes, total_price, room_id)
-VALUES ('2025-12-24', '2025-12-26', 0.00, 22000.00, 242000.00, 4);
-INSERT INTO reservation (check_in_date, check_out_date, discount, taxes, total_price, room_id)
-VALUES ('2026-01-05', '2026-01-10', 5000.00, 17500.00, 192500.00, 5);
-INSERT INTO reservation (check_in_date, check_out_date, discount, taxes, total_price, room_id)
-VALUES ('2025-09-20', '2025-09-22', 20000.00, 43000.00, 473000.00, 2);
+INSERT INTO reservation (check_in_date, check_out_date, discount, taxes, total_price, room_id, user_id) VALUES
+                                                                                                            ('2024-01-10', '2024-01-12', 50000, 25000, 575000, 1, 1),
+                                                                                                            ('2024-02-15', '2024-02-18', 100000, 50000, 1200000, 2, 2),
+                                                                                                            ('2024-03-20', '2024-03-22', 30000, 15000, 485000, 3, 3),
+                                                                                                            ('2024-04-05', '2024-04-07', 70000, 35000, 665000, 4, 4),
+                                                                                                            ('2024-05-25', '2024-05-27', 20000, 10000, 390000, 5, 5);
 
 -- TravelPackage 테이블 INSERT
-INSERT INTO travel_package (title, description, price, st_date, end_date, city_id)
-VALUES ('[서울 시티투어] 궁궐과 미식의 조화', '경복궁, 창덕궁 등 서울의 5대 궁궐을 둘러보고, 광장시장에서 다양한 먹거리를 즐기는 알찬 당일치기 패키지입니다.', 89000.00,
-        '2025-10-05', '2025-10-05', 1);
-INSERT INTO travel_package (title, description, price, st_date, end_date, city_id)
-VALUES ('[부산 힐링여행] 바다와 야경을 한번에', '해운대 해변에서의 여유로운 시간과 더베이101의 화려한 야경을 함께 즐길 수 있는 2박 3일 힐링 코스입니다.', 250000.00,
-        '2025-11-10', '2025-11-12', 2);
-INSERT INTO travel_package (title, description, price, st_date, end_date, city_id)
-VALUES ('[제주도 완전정복] 동서남북 핵심투어', '3박 4일간 제주도의 동쪽, 서쪽, 남쪽, 북쪽의 핵심 명소들을 모두 둘러보는 실속있는 패키지입니다.', 450000.00, '2025-09-28',
-        '2025-10-01', 3);
-INSERT INTO travel_package (title, description, price, st_date, end_date, city_id)
-VALUES ('[강릉 감성여행] 커피와 바다', '안목해변 카페거리에서 즐기는 커피 한 잔의 여유와 BTS 버스정류장 등 감성적인 포토 스팟을 방문하는 1박 2일 코스.', 180000.00,
-        '2025-10-18', '2025-10-19', 4);
-INSERT INTO travel_package (title, description, price, st_date, end_date, city_id)
-VALUES ('[경주 역사기행] 천년의 역사를 따라서', '불국사, 석굴암, 첨성대 등 신라의 역사가 살아숨쉬는 경주의 유적지들을 전문가의 설명과 함께 둘러보는 2박 3일 패키지.', 220000.00,
-        '2025-11-22', '2025-11-24', 5);
+ININSERT INTO travel_package (city_id, title, description, price, st_date, end_date) VALUES
+(1, '서울 2박 3일 시티 투어', '서울의 주요 관광지를 둘러보는 패키지', 350000, '2024-06-10', '2024-06-12'),
+(2, '부산 3박 4일 미식 여행', '부산의 맛집을 탐방하는 미식 여행 패키지', 450000, '2024-07-15', '2024-07-18'),
+(3, '제주 4박 5일 힐링 여행', '제주의 자연 속에서 힐링하는 여행', 550000, '2024-08-20', '2024-08-24'),
+(4, '인천 1박 2일 차이나타운 투어', '인천 차이나타운과 개항장 거리를 둘러보는 패키지', 150000, '2024-09-05', '2024-09-06'),
+(5, '경주 2박 3일 역사 여행', '신라의 역사를 따라 떠나는 여행', 250000, '2024-10-10', '2024-10-12');
 
 -- Package_Image 테이블 INSERT
-INSERT INTO package_image (image_url, package_id)
-VALUES ('https://example.com/images/seoul_palace.jpg', 1);
-INSERT INTO package_image (image_url, package_id)
-VALUES ('https://example.com/images/seoul_market.jpg', 1);
-INSERT INTO package_image (image_url, package_id)
-VALUES ('https://example.com/images/busan_haeundae.jpg', 2);
-INSERT INTO package_image (image_url, package_id)
-VALUES ('https://example.com/images/jeju_seongsan.jpg', 3);
-INSERT INTO package_image (image_url, package_id)
-VALUES ('https://example.com/images/gangneung_coffee.jpg', 4);
-
+INSERT INTO package_image (image_url, package_id) VALUES
+                                                      ('http://example.com/images/seoul_tour.jpg', 1),
+                                                      ('http://example.com/images/busan_food.jpg', 2),
+                                                      ('http://example.com/images/jeju_healing.jpg', 3),
+                                                      ('http://example.com/images/incheon_chinatown.jpg', 4),
+                                                      ('http://example.com/images/gyeongju_history.jpg', 5);
 
 -- =================================================================
 -- 3. Package 테이블: 여행 패키지 정보 추가 (id 열 제거)
@@ -139,70 +103,34 @@ VALUES (1, 'https://example.com/images/malacca_tour_1.jpg'),
        (4, 'https://example.com/images/london_classic.jpg');
 
 -- 임시 유저 인서트
-INSERT INTO user (user_name, email, password, phone_number, address, birth_date, image_url)
-VALUES ('김철수', 'chulsoo@example.com', 'password123', '010-1111-1111', '서울시 강남구', '1990-05-10',
-        'https://example.com/images/user1.jpg'),
-       ('이영희', 'younghee@example.com', 'password123', '010-2222-2222', '서울시 송파구', '1988-03-22',
-        'https://example.com/images/user2.jpg'),
-       ('박민수', 'minsu@example.com', 'password123', '010-3333-3333', '경기도 성남시', '1995-07-15',
-        'https://example.com/images/user3.jpg'),
-       ('최지은', 'jieun@example.com', 'password123', '010-4444-4444', '인천시 부평구', '1992-12-01',
-        'https://example.com/images/user4.jpg'),
-       ('정다은', 'daeun@example.com', 'password123', '010-5555-5555', '부산시 해운대구', '1998-06-30',
-        'https://example.com/images/user5.jpg'),
-       ('한성우', 'sungwoo@example.com', 'password123', '010-6666-6666', '대구시 수성구', '1991-11-11',
-        'https://example.com/images/user6.jpg'),
-       ('김하늘', 'haneul@example.com', 'password123', '010-7777-7777', '서울시 마포구', '1993-02-18',
-        'https://example.com/images/user7.jpg'),
-       ('이준호', 'junho@example.com', 'password123', '010-8888-8888', '경기도 고양시', '1996-09-05',
-        'https://example.com/images/user8.jpg'),
-       ('송민지', 'minji@example.com', 'password123', '010-9999-9999', '광주시 북구', '1994-04-20',
-        'https://example.com/images/user9.jpg'),
-       ('강태훈', 'taehoon@example.com', 'password123', '010-0000-0000', '대전시 유성구', '1989-08-12',
-        'https://example.com/images/user10.jpg');
-
+INSERT INTO "user" (user_name, email, password, phone_number, address, birth_date, image_url, background_image_url) VALUES
+                                                                                                                        ('김민준', 'minjun.kim@example.com', 'password123', '010-1234-5678', '서울시 강남구', '1990-01-15', 'http://example.com/images/minjun.jpg', 'http://example.com/images/minjun_bg.jpg'),
+                                                                                                                        ('이서연', 'seoyeon.lee@example.com', 'password456', '010-2345-6789', '부산시 해운대구', '1992-05-20', 'http://example.com/images/seoyeon.jpg', 'http://example.com/images/seoyeon_bg.jpg'),
+                                                                                                                        ('박준호', 'junho.park@example.com', 'password789', '010-3456-7890', '인천시 연수구', '1988-08-10', 'http://example.com/images/junho.jpg', 'http://example.com/images/junho_bg.jpg'),
+                                                                                                                        ('최지우', 'jiwoo.choi@example.com', 'password101', '010-4567-8901', '대구시 수성구', '1995-11-25', 'http://example.com/images/jiwoo.jpg', 'http://example.com/images/jiwoo_bg.jpg'),
+                                                                                                                        ('정유진', 'yujin.jung@example.com', 'password202', '010-5678-9012', '광주시 서구', '1998-03-30', 'http://example.com/images/yujin.jpg', 'http://example.com/images/yujin_bg.jpg');
 -- 임시 리뷰 인서트
 -- 신라호텔 (hotel_id = 1) 리뷰
-INSERT INTO review (user_id, hotel_id, content, user_rating_score, report_yn)
-VALUES (1, 1, '최고의 경험이었습니다. 직원분들이 정말 친절해요.', 5.0, FALSE),
-       (2, 1, '룸 컨디션이 매우 깨끗하고 조용해서 좋았습니다.', 4.5, FALSE),
-       (3, 1, '조식 뷔페가 기대 이상이었어요. 종류도 다양하고 맛있습니다.', 4.8, FALSE);
-
--- 파라다이스 호텔 부산 (hotel_id = 2) 리뷰
-INSERT INTO review (user_id, hotel_id, content, user_rating_score, report_yn)
-VALUES (4, 2, '해운대 뷰가 환상적입니다. 위치가 정말 최고네요.', 5.0, FALSE),
-       (5, 2, '가격대가 좀 있지만, 그만한 가치를 하는 곳입니다. 수영장이 특히 좋았어요.', 4.7, FALSE);
-
--- 롯데호텔 제주 (hotel_id = 3) 리뷰
-INSERT INTO review (user_id, hotel_id, content, user_rating_score, report_yn)
-VALUES (6, 3, '가족 여행으로 완벽한 숙소입니다. 아이들이 정말 좋아했어요.', 4.9, FALSE),
-       (7, 3, '시설이 약간 오래된 느낌이 들었지만, 전반적으로 만족합니다.', 3.8, FALSE);
-
--- 세인트존스 호텔 (hotel_id = 4) 리뷰
-INSERT INTO review (user_id, hotel_id, content, user_rating_score, report_yn)
-VALUES (8, 4, '강문해변 바로 앞이라 산책하기 너무 좋았어요. 방에서 보는 일출이 멋집니다.', 4.6, FALSE);
-
--- 힐튼 경주 (hotel_id = 5) 리뷰
-INSERT INTO review (user_id, hotel_id, content, user_rating_score, report_yn)
-VALUES (9, 5, '보문단지 중심에 있어서 경주 여행하기에 위치가 편리합니다.', 4.3, FALSE),
-       (10, 5, '수영장이 넓고 관리가 잘 되어 있어서 아이들과 놀기 좋았습니다.', 4.4, FALSE);
+INSERT INTO review (user_id, content, user_rating_score, report_yn, hotel_id) VALUES
+                                                                                  (1, '서비스가 매우 만족스러웠습니다. 직원들이 친절하고 시설도 깨끗합니다.', 4.5, false, 1),
+                                                                                  (2, '오션 뷰가 정말 멋졌어요. 다시 방문하고 싶습니다.', 5.0, false, 2),
+                                                                                  (3, '가족 여행에 최고였습니다. 아이들이 좋아했어요.', 4.0, false, 3),
+                                                                                  (4, '조용하고 편안한 분위기에서 잘 쉬었습니다.', 4.8, false, 4),
+                                                                                  (5, '가격 대비 만족도가 높았습니다. 추천합니다.', 4.2, false, 5);
 -- 임시 편의시설 인서트
-INSERT INTO amenities (front_desk24, outdoor_pool, indoor_pool, spa_wellness_center, restaurant, roomservice,
-                       fitness_center, bar_lounge, tea_coffee_machine, airconditioning, hotel_id)
-VALUES (1, 1, 0, 1, 1, 1, 1, 0, 1, 1, 1),
-       (1, 0, 0, 0, 1, 1, 0, 0, 1, 1, 2),
-       (1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 3),
-       (1, 0, 1, 0, 1, 0, 1, 1, 1, 1, 4),
-       (1, 1, 0, 0, 1, 1, 0, 0, 1, 1, 5);
-
+INSERT INTO amenities (front_desk24, outdoor_pool, indoor_pool, spa_wellness_center, restaurant, roomservice, fitness_center, bar_lounge, tea_coffee_machine, airconditioning, hotel_id) VALUES
+                                                                                                                                                                                             (true, true, true, true, true, true, true, true, true, true, 11),
+                                                                                                                                                                                             (true, true, false, true, true, true, true, true, true, true, 12),
+                                                                                                                                                                                             (true, true, true, true, true, true, true, true, true, true, 13),
+                                                                                                                                                                                             (true, false, false, false, true, true, false, false, true, true, 14),
+                                                                                                                                                                                             (true, true, true, true, true, true, true, true, true, true, 15);
 -- 임시 무료 서비스 인서트
-INSERT INTO freebies (Breakfast_included, free_parking, free_wifi, Airport_shuttlebus, free_cancellation, hotel_id)
-VALUES (1, 1, 1, 0, 1, 1),
-       (1, 0, 1, 0, 1, 2),
-       (1, 1, 1, 1, 1, 3),
-       (0, 0, 1, 1, 1, 4),
-       (1, 1, 0, 0, 1, 5);
-
+INSERT INTO freebies (Breakfast_included, free_parking, free_wifi, Airport_shuttlebus, free_cancellation, hotel_id) VALUES
+                                                                                                                        (true, true, true, true, true, 11),
+                                                                                                                        (false, true, true, false, true, 12),
+                                                                                                                        (true, true, true, true, false, 13),
+                                                                                                                        (true, true, true, false, true, 14),
+                                                                                                                        (false, true, true, false, true, 15);
 -- 임시 편의시설 인서트
 INSERT INTO amenities (front_desk24, outdoor_pool, indoor_pool, spa_wellness_center, restaurant, roomservice, fitness_center, bar_lounge, tea_coffee_machine, airconditioning, hotel_id) VALUES
           (1, 1, 0, 1, 1, 1, 1, 0, 1, 1, 1),
@@ -220,8 +148,20 @@ INSERT INTO freebies (Breakfast_included, free_parking, free_wifi, Airport_shutt
           (1, 1, 0, 0, 1, 5);
 
 
+INSERT INTO payment (payment_name, payment_number, expiration_date, cvc, card_user, country, registration_date, user_id) VALUES
+                                                                                                                             ('신한카드', '1234-5678-9012-3456', '2025-12-31', '123', '김민준', '대한민국', '2023-01-15 10:00:00', 1),
+                                                                                                                             ('국민카드', '2345-6789-0123-4567', '2026-11-30', '234', '이서연', '대한민국', '2023-02-20 11:30:00', 2),
+                                                                                                                             ('삼성카드', '3456-7890-1234-5678', '2027-10-31', '345', '박준호', '대한민국', '2023-03-25 14:00:00', 3),
+                                                                                                                             ('현대카드', '4567-8901-2345-6789', '2028-09-30', '456', '최지우', '대한민국', '2023-04-10 16:45:00', 4),
+                                                                                                                             ('우리카드', '5678-9012-3456-7890', '2029-08-31', '567', '정유진', '대한민국', '2023-05-12 18:20:00', 5);
 
 
+INSERT INTO pay (payment_gateway, redate, price, payment_id, user_id, reservation_id) VALUES
+                                                                                          ('카카오페이', '2024-01-10 14:00:00', 575000, 1, 1, 1),
+                                                                                          ('네이버페이', '2024-02-15 16:30:00', 1200000, 2, 2, 2),
+                                                                                          ('토스페이', '2024-03-20 18:00:00', 485000, 3, 3, 3),
+                                                                                          ('신용카드', '2024-04-05 20:15:00', 665000, 4, 4, 4),
+                                                                                          ('계좌이체', '2024-05-25 22:00:00', 390000, 5, 5, 5);
 --=============
 -- 호텔 도시 필수값으로 지정
 --=============
