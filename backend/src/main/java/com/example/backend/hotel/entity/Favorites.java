@@ -18,10 +18,10 @@ public class Favorites {
     private Long id;
 
     @ManyToOne
-    @JoinColumn
+    @JoinColumn(name = "user_id")
     private User user;
 
     @ManyToOne
-    @JoinColumn
+    @JoinColumn(name = "hotel_id")
     private Hotel hotel;
 }
