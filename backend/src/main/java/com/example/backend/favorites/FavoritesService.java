@@ -4,6 +4,7 @@ import com.example.backend.feature.hotelfilters.dto.HotelDto;
 import com.example.backend.hotel.entity.Favorites;
 import com.example.backend.hotel.entity.Hotel;
 import com.example.backend.hotel.entity.Room;
+import com.example.backend.review.ReviewRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,6 +19,7 @@ import java.util.stream.Collectors;
 public class FavoritesService {
 
     private final FavoritesRepository favoritesRepository;
+    private final ReviewRepository reviewRepository;
 
 
     public List<HotelDto> getFavoriteHotels(Long userId) {
@@ -27,6 +29,10 @@ public class FavoritesService {
                 .map(fav -> {
                     Hotel h = fav.getHotel();
 
+                    Double totalRating = reviewRepository.findTotalRatingByHotelId(h.getId());
+                    long reviewCount = reviewRepository.countByHotelId(h.getId());
+                    double avgRating = (totalRating != null && reviewCount > 0) ? totalRating / reviewCount : 0.0;
+
                     return new HotelDto(
                             h.getId(),
                             h.getName(),
@@ -34,7 +40,7 @@ public class FavoritesService {
                             h.getGrade(),
                             countAmenities(h),
                             getLowestAvailablePrice(h),
-                            0.0, // 평점은 임시 0.0
+                            avgRating,
                             getRepresentativeImage(h),
                             true // 찜 여부 무조건 true
                     );
