@@ -79,7 +79,7 @@ INSERT INTO package_image (image_url, package_id) VALUES
 -- city_id는 위에서 생성된 City의 id를 그대로 사용합니다.
 -- =================================================================
 -- '여행 더보기' (MainPackage) 용 데이터 (id=1로 자동 생성될 것)
-INSERT INTO package (title, description, price, st_date, end_date, city_id)
+INSERT INTO travel_package (title, description, price, st_date, end_date, city_id)
 VALUES ('말라카 투어', '시간이 멈춘 도시, 말라카에서 과거로의 여행을 떠나보세요. 유네스코 세계문화유산을 거닐며 역사와 낭만을 동시에 느낄 수 있습니다.', 700.00, '2025-10-01',
         '2025-10-05', 5);
 
@@ -94,7 +94,7 @@ VALUES ('Melbourne Journey', '활기찬 도시 멜버른의 매력에 빠져보�
 -- 4. PackageImage 테이블: 패키지 이미지 URL 추가
 -- package_id는 위에서 생성된 Package의 id (1='말라카', 2='멜버른' 등)를 그대로 사용합니다.
 -- =================================================================
-INSERT INTO packageimage (package_id, image_url)
+INSERT INTO package_image (package_id, image_url)
 VALUES (1, 'https://example.com/images/malacca_tour_1.jpg'),
        (1, 'https://example.com/images/malacca_tour_2.jpg'),
        (1, 'https://example.com/images/malacca_tour_3.jpg'),
@@ -103,7 +103,7 @@ VALUES (1, 'https://example.com/images/malacca_tour_1.jpg'),
        (4, 'https://example.com/images/london_classic.jpg');
 
 -- 임시 유저 인서트
-INSERT INTO "user" (user_name, email, password, phone_number, address, birth_date, image_url, background_image_url) VALUES
+INSERT INTO user (user_name, email, password, phone_number, address, birth_date, image_url, background_image_url) VALUES
                                                                                                                         ('김민준', 'minjun.kim@example.com', 'password123', '010-1234-5678', '서울시 강남구', '1990-01-15', 'http://example.com/images/minjun.jpg', 'http://example.com/images/minjun_bg.jpg'),
                                                                                                                         ('이서연', 'seoyeon.lee@example.com', 'password456', '010-2345-6789', '부산시 해운대구', '1992-05-20', 'http://example.com/images/seoyeon.jpg', 'http://example.com/images/seoyeon_bg.jpg'),
                                                                                                                         ('박준호', 'junho.park@example.com', 'password789', '010-3456-7890', '인천시 연수구', '1988-08-10', 'http://example.com/images/junho.jpg', 'http://example.com/images/junho_bg.jpg'),
@@ -119,18 +119,18 @@ INSERT INTO review (user_id, content, user_rating_score, report_yn, hotel_id) VA
                                                                                   (5, '가격 대비 만족도가 높았습니다. 추천합니다.', 4.2, false, 5);
 -- 임시 편의시설 인서트
 INSERT INTO amenities (front_desk24, outdoor_pool, indoor_pool, spa_wellness_center, restaurant, roomservice, fitness_center, bar_lounge, tea_coffee_machine, airconditioning, hotel_id) VALUES
-                                                                                                                                                                                             (true, true, true, true, true, true, true, true, true, true, 11),
-                                                                                                                                                                                             (true, true, false, true, true, true, true, true, true, true, 12),
-                                                                                                                                                                                             (true, true, true, true, true, true, true, true, true, true, 13),
-                                                                                                                                                                                             (true, false, false, false, true, true, false, false, true, true, 14),
-                                                                                                                                                                                             (true, true, true, true, true, true, true, true, true, true, 15);
+                                                                                                                                                                                             (true, true, true, true, true, true, true, true, true, true, 1),
+                                                                                                                                                                                             (true, true, false, true, true, true, true, true, true, true, 2),
+                                                                                                                                                                                             (true, true, true, true, true, true, true, true, true, true, 3),
+                                                                                                                                                                                             (true, false, false, false, true, true, false, false, true, true, 4),
+                                                                                                                                                                                             (true, true, true, true, true, true, true, true, true, true, 5);
 -- 임시 무료 서비스 인서트
 INSERT INTO freebies (Breakfast_included, free_parking, free_wifi, Airport_shuttlebus, free_cancellation, hotel_id) VALUES
-                                                                                                                        (true, true, true, true, true, 11),
-                                                                                                                        (false, true, true, false, true, 12),
-                                                                                                                        (true, true, true, true, false, 13),
-                                                                                                                        (true, true, true, false, true, 14),
-                                                                                                                        (false, true, true, false, true, 15);
+                                                                                                                        (true, true, true, true, true, 1),
+                                                                                                                        (false, true, true, false, true, 2),
+                                                                                                                        (true, true, true, true, false, 3),
+                                                                                                                        (true, true, true, false, true, 4),
+                                                                                                                        (false, true, true, false, true, 5);
 -- 임시 편의시설 인서트
 INSERT INTO amenities (front_desk24, outdoor_pool, indoor_pool, spa_wellness_center, restaurant, roomservice, fitness_center, bar_lounge, tea_coffee_machine, airconditioning, hotel_id) VALUES
           (1, 1, 0, 1, 1, 1, 1, 0, 1, 1, 1),
@@ -162,6 +162,8 @@ INSERT INTO pay (payment_gateway, redate, price, payment_id, user_id, reservatio
                                                                                           ('토스페이', '2024-03-20 18:00:00', 485000, 3, 3, 3),
                                                                                           ('신용카드', '2024-04-05 20:15:00', 665000, 4, 4, 4),
                                                                                           ('계좌이체', '2024-05-25 22:00:00', 390000, 5, 5, 5);
+
+
 --=============
 -- 호텔 도시 필수값으로 지정
 --=============
