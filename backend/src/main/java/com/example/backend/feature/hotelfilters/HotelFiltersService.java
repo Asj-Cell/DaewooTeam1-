@@ -51,6 +51,7 @@ public class HotelFiltersService {
                             getLowestAvailablePrice(h, request),
                             avgRating,
                             getRepresentativeImage(h)
+
                     );
                 })
 

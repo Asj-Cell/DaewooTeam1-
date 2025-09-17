@@ -1,0 +1,10 @@
+FROM openjdk:21-jdk-slim
+
+# Set working directory
+WORKDIR /app
+
+# Copy the built JAR file (adjust the path and name)
+COPY build/libs/backend.jar test.jar
+
+# Set command to run the JAR
+ENTRYPOINT ["java", "-jar", "test.jar"]

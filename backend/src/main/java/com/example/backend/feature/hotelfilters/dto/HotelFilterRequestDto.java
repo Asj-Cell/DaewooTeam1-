@@ -1,13 +1,16 @@
 package com.example.backend.feature.hotelfilters.dto;
 
+import com.example.backend.user.dto.UserProfileRequestDto;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
 @Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 
@@ -38,4 +41,6 @@ public class HotelFilterRequestDto {
     private BigDecimal maxPrice;
 
     private String sortBy; // "rating" / "priceAsc" / "priceDesc"
+
+//    private UserProfileRequestDto loginUser;
 }
