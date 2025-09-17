@@ -67,9 +67,9 @@ public class HotelFiltersController {
             @RequestParam int page,
             @RequestParam int size
     ) {
-//        UserProfileRequestDto uprd = new UserProfileRequestDto();
-//        uprd.setUserId(1L);
-//        request.setLoginUser(uprd);
+        UserProfileRequestDto uprd = new UserProfileRequestDto();
+        uprd.setUserId(1L);
+        request.setLoginUser(uprd);
         Pageable pageable = PageRequest.of(page, size);
         Page<HotelDto> hotelPage = hotelFiltersService.filterHotels(request, pageable);
 

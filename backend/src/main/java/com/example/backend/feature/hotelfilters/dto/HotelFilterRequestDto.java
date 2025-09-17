@@ -42,5 +42,5 @@ public class HotelFilterRequestDto {
 
     private String sortBy; // "rating" / "priceAsc" / "priceDesc"
 
-//    private UserProfileRequestDto loginUser;
+    private UserProfileRequestDto loginUser;
 }

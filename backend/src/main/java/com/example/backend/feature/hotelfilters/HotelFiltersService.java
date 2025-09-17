@@ -1,5 +1,6 @@
 package com.example.backend.feature.hotelfilters;
 
+import com.example.backend.favorites.FavoritesRepository;
 import com.example.backend.hotel.entity.Hotel;
 import com.example.backend.feature.hotelfilters.dto.HotelDto;
 import com.example.backend.feature.hotelfilters.dto.HotelFilterRequestDto;
@@ -26,6 +27,7 @@ public class HotelFiltersService {
 
     private final HotelRepository hotelRepository;
     private final ReviewRepository reviewRepository;
+    private final FavoritesRepository favoritesRepository;
 
     public Page<HotelDto> filterHotels(HotelFilterRequestDto request, Pageable pageable) {
         // 1. Specification으로 DB에서 필터 적용
@@ -34,6 +36,12 @@ public class HotelFiltersService {
         // 2. DB 조회 + 페이징 처리
         Page<Hotel> hotelPage = hotelRepository.findAll(spec, pageable);
 
+        Long loginUserId;
+        if (request.getLoginUser() != null) {
+            loginUserId = request.getLoginUser().getUserId();
+        } else {
+            loginUserId = null;
+        }
         // 3. DTO 변환 + 정렬
         List<HotelDto> sortedDtos = hotelPage.stream()
                 .map(h -> {
@@ -41,6 +49,14 @@ public class HotelFiltersService {
                     Double totalRating = reviewRepository.findTotalRatingByHotelId(h.getId());
                     long reviewCount = reviewRepository.countByHotelId(h.getId());
                     double avgRating = (totalRating != null && reviewCount > 0) ? totalRating / reviewCount : 0.0;
+
+                    boolean isFavorite = false;
+                    if (request.getLoginUser() != null && request.getLoginUser().getUserId() != null) {
+                        isFavorite = favoritesRepository.existsByUser_IdAndHotel_Id(
+                                request.getLoginUser().getUserId(), h.getId()
+                        );
+                    }
+
 
                     return new HotelDto(
                             h.getId(),
@@ -50,8 +66,8 @@ public class HotelFiltersService {
                             countAmenities(h),
                             getLowestAvailablePrice(h, request),
                             avgRating,
-                            getRepresentativeImage(h)
-
+                            getRepresentativeImage(h),
+                            isFavorite
                     );
                 })
 

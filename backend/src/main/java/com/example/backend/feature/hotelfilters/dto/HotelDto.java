@@ -22,5 +22,5 @@ public class HotelDto {
     private BigDecimal price;
     private Double rating;
     private String imageUrl;
-//    private Long favoriteId;
+    private Boolean favoriteId;
 }
