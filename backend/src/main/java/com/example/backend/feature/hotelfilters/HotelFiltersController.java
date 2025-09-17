@@ -2,6 +2,7 @@ package com.example.backend.feature.hotelfilters;
 
 import com.example.backend.feature.hotelfilters.dto.HotelDto;
 import com.example.backend.feature.hotelfilters.dto.HotelFilterRequestDto;
+import com.example.backend.user.dto.UserProfileRequestDto;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -53,6 +54,10 @@ public class HotelFiltersController {
      *   "maxprice": null,
      *   "page": 0,
      *   "size": 4
+     *
+     *
+     *
+     *   정렬관련 손다시 봐야함
      * }
      */
 
@@ -62,6 +67,9 @@ public class HotelFiltersController {
             @RequestParam int page,
             @RequestParam int size
     ) {
+        UserProfileRequestDto uprd = new UserProfileRequestDto();
+        uprd.setUserId(1L);
+        request.setLoginUser(uprd);
         Pageable pageable = PageRequest.of(page, size);
         Page<HotelDto> hotelPage = hotelFiltersService.filterHotels(request, pageable);
 

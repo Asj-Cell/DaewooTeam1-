@@ -74,3 +74,5 @@ maven-wrapper.properties
 mvnw
 mvnw.cmd
 *.iml
+
+mydata/
