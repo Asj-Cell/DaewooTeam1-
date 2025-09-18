@@ -20,7 +20,7 @@ import java.util.List;
 @Table(name = "payment")
 @NoArgsConstructor
 @SQLDelete(sql = "UPDATE payment SET is_deleted = true WHERE id = ?")
-@Where(clause = "is_deleted = false")
+@Where(clause = "is_deleted = false") // 애는 고객의 카드 정보만 있음
 public class Payment {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -51,7 +51,7 @@ public class Payment {
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
-    @OneToMany(mappedBy = "payment", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "payment")
     private List<Pay> pays = new ArrayList<>();
 
     @Column(name = "is_deleted")
