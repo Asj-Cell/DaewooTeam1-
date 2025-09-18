@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 @Entity
 @NoArgsConstructor
 @Table(name = "pay")
-@Getter @Setter
+@Getter @Setter // 카드로 결재한 내역 결재 시에 여기에 추가됨
 public class Pay {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
