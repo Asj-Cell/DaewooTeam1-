@@ -18,7 +18,7 @@ services:
 #    restart: always
 
   boot-app:
-    image: goals00002/backend_image
+    image: asjcell/backend_image
 #    build:
 #      context: ./
 #      dockerfile: dockerfile
