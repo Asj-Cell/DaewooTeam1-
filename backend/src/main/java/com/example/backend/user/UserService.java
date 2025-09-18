@@ -1,21 +1,21 @@
 package com.example.backend.user;
 
-import com.example.backend.user.dto.ReservationDetailDto;
-import com.example.backend.user.dto.UserProfileAllResponseDto; // 추가
-import com.example.backend.user.dto.UserProfileResponseDto;
-import com.example.backend.user.dto.UserReservationResponseDto;
+import com.example.backend.payment.PaymentRepository;
+import com.example.backend.user.dto.*;
 import com.example.backend.user.entity.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
 public class UserService {
 
     private final UserRepository userRepository;
+    private final PaymentRepository paymentRepository;
 
     @Transactional(readOnly = true)
     public UserProfileAllResponseDto getUserProfileAll(Long userId) {
@@ -34,7 +34,7 @@ public class UserService {
     }
 
     @Transactional(readOnly = true)
-    public UserReservationResponseDto getUserReservations(Long userId) {
+    public List<ReservationDetailDto> getUserReservations(Long userId) {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new IllegalArgumentException("User not found with id: " + userId));
 
@@ -42,6 +42,14 @@ public class UserService {
                 .map(reservation -> new ReservationDetailDto(reservation)) // Reservation -> ReservationDetailDto 변환
                 .toList();
 
-        return new UserReservationResponseDto(reservationDetails); // Wrapper DTO로 감싸서 반환
+        return reservationDetails; // Wrapper DTO로 감싸서 반환
+    }
+
+    @Transactional(readOnly = true)
+    public List<UserProfilePaymentMethodDto> getUserPaymentMethods(Long userId) {
+        // userId로 모든 Payment 엔티티를 조회
+        return paymentRepository.findAllByUserId(userId).stream()
+                .map(UserProfilePaymentMethodDto::new) // Payment -> DTO 변환
+                .toList();
     }
 }

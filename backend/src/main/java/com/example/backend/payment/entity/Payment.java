@@ -5,16 +5,22 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.Where;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.YearMonth;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity @Getter
 @Setter
 @Table(name = "payment")
 @NoArgsConstructor
+@SQLDelete(sql = "UPDATE payment SET is_deleted = true WHERE id = ?")
+@Where(clause = "is_deleted = false")
 public class Payment {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -45,13 +51,11 @@ public class Payment {
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
+    @OneToMany(mappedBy = "payment", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Pay> pays = new ArrayList<>();
 
-
-
-
-
-
-
+    @Column(name = "is_deleted")
+    private boolean isDeleted = false;
 
     public void setExpirationDate(String monthYear) {
         // "MM/yy" 형식의 포맷터를 준비합니다.
