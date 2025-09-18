@@ -18,9 +18,10 @@ services:
 #    restart: always
 
   boot-app:
-    build:
-      context: ./
-      dockerfile: dockerfile
+    image: goals00002/backend_image
+#    build:
+#      context: ./
+#      dockerfile: dockerfile
     container_name: boot_container
     ports:
       - 18888:8888
