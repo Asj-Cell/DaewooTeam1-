@@ -1,7 +1,6 @@
 package com.example.backend.common.exception;
 
 
-import com.example.backend.common.util.ApiResponse2;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.core.MethodParameter;

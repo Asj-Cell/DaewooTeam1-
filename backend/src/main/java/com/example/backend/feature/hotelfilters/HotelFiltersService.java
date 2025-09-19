@@ -22,7 +22,7 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
-@Transactional(readOnly = true)
+@Transactional
 public class HotelFiltersService {
 
     private final HotelRepository hotelRepository;
@@ -67,7 +67,8 @@ public class HotelFiltersService {
                             getLowestAvailablePrice(h, request),
                             avgRating,
                             getRepresentativeImage(h),
-                            isFavorite
+                            isFavorite,
+                            reviewCount
                     );
                 })
 
