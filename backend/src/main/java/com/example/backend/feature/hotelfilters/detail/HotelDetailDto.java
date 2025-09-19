@@ -29,6 +29,7 @@ public class HotelDetailDto extends HotelDto {
                           double rating,
                           String representativeImage,
                           boolean isFavorite,
+                          Long reviewCount,
                           List<String> amenities,
                           List<RoomDto> rooms,
                           String overview) {

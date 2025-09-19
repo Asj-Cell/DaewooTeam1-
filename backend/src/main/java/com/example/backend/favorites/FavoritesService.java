@@ -42,7 +42,8 @@ public class FavoritesService {
                             getLowestAvailablePrice(h),
                             avgRating,
                             getRepresentativeImage(h),
-                            true // 찜 여부 무조건 true
+                            true, // 찜 여부 무조건 true
+                            reviewCount
                     );
                 })
                 .collect(Collectors.toList());

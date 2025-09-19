@@ -53,6 +53,7 @@ public class HotelDetailService {
                 avgRating,
                 getRepresentativeImage(hotel),
                 isFavorite,
+                reviewCount,
                 amenities,
                 rooms,
                 hotel.getOverview()
