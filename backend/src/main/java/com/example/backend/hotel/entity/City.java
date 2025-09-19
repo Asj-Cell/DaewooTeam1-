@@ -1,6 +1,5 @@
-package com.example.backend.common;
+package com.example.backend.hotel.entity;
 
-import com.example.backend.hotel.entity.Hotel; // 추가
 import com.example.backend.travelPackage.entity.TravelPackage; // 추가
 import jakarta.persistence.*;
 import lombok.Getter;

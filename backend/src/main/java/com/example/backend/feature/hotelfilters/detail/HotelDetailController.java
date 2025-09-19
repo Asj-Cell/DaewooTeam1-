@@ -28,4 +28,3 @@ public class HotelDetailController {
         return ResponseEntity.ok(detailDto);
     }
 }
-
