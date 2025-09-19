@@ -1,5 +1,6 @@
-package com.example.backend.hotel.entity;
+package com.example.backend.favorites.entity;
 
+import com.example.backend.hotel.entity.Hotel;
 import com.example.backend.user.entity.User;
 import jakarta.persistence.*;
 import lombok.Getter;

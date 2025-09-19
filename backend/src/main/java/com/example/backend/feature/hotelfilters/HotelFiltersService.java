@@ -5,7 +5,7 @@ import com.example.backend.hotel.entity.Hotel;
 import com.example.backend.feature.hotelfilters.dto.HotelDto;
 import com.example.backend.feature.hotelfilters.dto.HotelFilterRequestDto;
 import com.example.backend.hotel.HotelRepository;
-import com.example.backend.hotel.entity.Room;
+import com.example.backend.room.entity.Room;
 import com.example.backend.review.ReviewRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -22,7 +22,7 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
-@Transactional(readOnly = true)
+@Transactional
 public class HotelFiltersService {
 
     private final HotelRepository hotelRepository;
@@ -67,7 +67,8 @@ public class HotelFiltersService {
                             getLowestAvailablePrice(h, request),
                             avgRating,
                             getRepresentativeImage(h),
-                            isFavorite
+                            isFavorite,
+                            reviewCount
                     );
                 })
 

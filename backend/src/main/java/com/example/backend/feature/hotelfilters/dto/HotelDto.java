@@ -23,4 +23,5 @@ public class HotelDto {
     private Double rating;
     private String imageUrl;
     private Boolean favoriteId;
+    private Long reviewCount;
 }

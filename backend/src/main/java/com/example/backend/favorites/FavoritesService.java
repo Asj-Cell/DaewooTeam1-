@@ -1,9 +1,9 @@
 package com.example.backend.favorites;
 
 import com.example.backend.feature.hotelfilters.dto.HotelDto;
-import com.example.backend.hotel.entity.Favorites;
+import com.example.backend.favorites.entity.Favorites;
 import com.example.backend.hotel.entity.Hotel;
-import com.example.backend.hotel.entity.Room;
+import com.example.backend.room.entity.Room;
 import com.example.backend.review.ReviewRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -42,7 +42,8 @@ public class FavoritesService {
                             getLowestAvailablePrice(h),
                             avgRating,
                             getRepresentativeImage(h),
-                            true // 찜 여부 무조건 true
+                            true, // 찜 여부 무조건 true
+                            reviewCount
                     );
                 })
                 .collect(Collectors.toList());
