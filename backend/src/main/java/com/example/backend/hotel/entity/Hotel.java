@@ -1,7 +1,8 @@
 package com.example.backend.hotel.entity;
 
 import com.example.backend.amenities.entity.Amenities;
-import com.example.backend.common.City;
+import com.example.backend.city.entity.City;
+
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -9,13 +10,12 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
-import lombok.Getter;
-import lombok.Setter;
-
-@Getter @Setter
+@Data
 @Entity
-@NoArgsConstructor
 @Table(name = "hotel")
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class Hotel {
 
     @Id

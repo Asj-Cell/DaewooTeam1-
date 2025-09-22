@@ -1,7 +1,6 @@
 package com.example.backend.travelPackage.entity;
 
 
-import com.example.backend.common.City;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -11,6 +10,8 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+
+import com.example.backend.city.entity.City;
 
 @Getter @Setter
 @Entity
