@@ -5,7 +5,7 @@ import com.example.backend.hotel.entity.Freebies;
 import com.example.backend.hotel.entity.Hotel;
 import com.example.backend.feature.hotelfilters.dto.HotelFilterRequestDto;
 import com.example.backend.hotel.entity.Reservation;
-import com.example.backend.hotel.entity.Room;
+import com.example.backend.room.entity.Room;
 import jakarta.persistence.criteria.Join;
 import jakarta.persistence.criteria.JoinType;
 import jakarta.persistence.criteria.Predicate;

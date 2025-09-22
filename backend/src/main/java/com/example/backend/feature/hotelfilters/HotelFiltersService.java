@@ -5,7 +5,8 @@ import com.example.backend.hotel.entity.Hotel;
 import com.example.backend.feature.hotelfilters.dto.HotelDto;
 import com.example.backend.feature.hotelfilters.dto.HotelFilterRequestDto;
 import com.example.backend.hotel.HotelRepository;
-import com.example.backend.hotel.entity.Room;
+import com.example.backend.hotel.entity.HotelImage;
+import com.example.backend.room.entity.Room;
 import com.example.backend.review.ReviewRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -22,7 +23,7 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
-@Transactional(readOnly = true)
+@Transactional
 public class HotelFiltersService {
 
     private final HotelRepository hotelRepository;
@@ -35,6 +36,7 @@ public class HotelFiltersService {
 
         // 2. DB 조회 + 페이징 처리
         Page<Hotel> hotelPage = hotelRepository.findAll(spec, pageable);
+
 
         Long loginUserId;
         if (request.getLoginUser() != null) {
@@ -57,6 +59,11 @@ public class HotelFiltersService {
                         );
                     }
 
+                    List<String> hotelImageUrls = h.getImages().stream()
+                            .map(HotelImage::getImageUrl)
+                            .toList();
+
+
 
                     return new HotelDto(
                             h.getId(),
@@ -66,8 +73,9 @@ public class HotelFiltersService {
                             countAmenities(h),
                             getLowestAvailablePrice(h, request),
                             avgRating,
-                            getRepresentativeImage(h),
-                            isFavorite
+                            hotelImageUrls,
+                            isFavorite,
+                            reviewCount
                     );
                 })
 
@@ -130,12 +138,6 @@ public class HotelFiltersService {
                 .map(Room::getPrice)
                 .min(BigDecimal::compareTo)
                 .orElse(BigDecimal.ZERO);
-    }
-
-
-    private String getRepresentativeImage(Hotel h) {
-        // 임시 이미지
-        return "https://example.com/default-image.jpg";
     }
 }
 

@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 /**
  * 두번째 페이지에 화면에 보여줄 호텔 정보들
@@ -21,6 +22,7 @@ public class HotelDto {
     private Integer amenitiesCount;
     private BigDecimal price;
     private Double rating;
-    private String imageUrl;
+    private List<String> imageUrls;
     private Boolean favoriteId;
+    private Long reviewCount;
 }
