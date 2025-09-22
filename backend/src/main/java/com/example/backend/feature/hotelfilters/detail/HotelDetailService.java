@@ -3,6 +3,7 @@ package com.example.backend.feature.hotelfilters.detail;
 import com.example.backend.favorites.FavoritesRepository;
 import com.example.backend.hotel.HotelRepository;
 import com.example.backend.hotel.entity.Hotel;
+import com.example.backend.hotel.entity.HotelImage;
 import com.example.backend.review.ReviewRepository;
 import com.example.backend.room.RoomService;
 import com.example.backend.room.dto.RoomDto;
@@ -42,7 +43,16 @@ public class HotelDetailService {
         boolean isFavorite = (loginUserId != null) &&
                 favoritesRepository.existsByUser_IdAndHotel_Id(loginUserId, hotelId);
 
-        // 5. HotelDetailDto 생성
+        List<String> roomImageUrls = hotel.getRooms().stream()
+                .flatMap(room -> room.getImages().stream())
+                .map(img -> img.getImageUrl())
+                .toList();
+
+        List<String> hotelImageUrls = hotel.getImages().stream()
+                .map(HotelImage::getImageUrl)
+                .toList();
+
+        // 6. HotelDetailDto 생성
         HotelDetailDto detailDto = new HotelDetailDto(
                 hotel.getId(),
                 hotel.getName(),
@@ -51,12 +61,13 @@ public class HotelDetailService {
                 countAmenities(hotel), // 편의시설 + 무료서비스 개수
                 getLowestRoomPrice(hotel), // 최저 객실 가격
                 avgRating,
-                getRepresentativeImage(hotel),
+                hotelImageUrls,
                 isFavorite,
                 reviewCount,
                 amenities,
                 rooms,
-                hotel.getOverview()
+                hotel.getOverview(),
+                roomImageUrls
         );
 
         return detailDto;
@@ -108,11 +119,6 @@ public class HotelDetailService {
         if (h.getAmenities().isBarLounge()) count++;
         if (h.getAmenities().isTeaCoffeeMachine()) count++;
         return count;
-    }
-
-    private String getRepresentativeImage(Hotel h) {
-        // 임시 이미지
-        return "https://example.com/default-image.jpg";
     }
 }
 

@@ -370,6 +370,38 @@ CREATE TABLE `pay` (
 LOCK TABLES `pay` WRITE;
 INSERT INTO `pay` VALUES (1,'카카오페이','2024-01-10 14:00:00.000000',575000.00,1,1,6),(2,'네이버페이','2024-02-15 16:30:00.000000',1200000.00,2,2,7),(3,'토스페이','2024-03-20 18:00:00.000000',485000.00,3,3,8),(4,'신용카드','2024-04-05 20:15:00.000000',665000.00,4,4,9),(5,'계좌이체','2024-05-25 22:00:00.000000',390000.00,5,5,10);
 UNLOCK TABLES;
+
+
+
+--
+-- Table structure for table `room_img`
+--
+CREATE TABLE `room_img` (
+                            `id` bigint(20) NOT NULL AUTO_INCREMENT,
+                            `image_url` varchar(255) NOT NULL,
+                            `size` int(11) NOT NULL,
+                            `room_id` bigint(20) NOT NULL,
+                            PRIMARY KEY (`id`),
+                            KEY `FK_room_img_room` (`room_id`),
+                            CONSTRAINT `FK_room_img_room` FOREIGN KEY (`room_id`) REFERENCES `room` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `room_img`
+--
+LOCK TABLES `room_img` WRITE;
+INSERT INTO `room_img` VALUES
+                           (1,'https://example.com/images/room1_1.jpg',1024,6),
+                           (2,'https://example.com/images/room1_2.jpg',2048,6),
+                           (3,'https://example.com/images/room2_1.jpg',1536,7),
+                           (4,'https://example.com/images/room2_2.jpg',1024,7),
+                           (5,'https://example.com/images/room3_1.jpg',2048,8),
+                           (6,'https://example.com/images/room3_2.jpg',512,8),
+                           (7,'https://example.com/images/room4_1.jpg',1024,9),
+                           (8,'https://example.com/images/room4_2.jpg',512,9),
+                           (9,'https://example.com/images/room5_1.jpg',1024,10),
+                           (10,'https://example.com/images/room5_2.jpg',2048,10);
+UNLOCK TABLES;
 --=============
 -- 호텔 도시 필수값으로 지정
 --=============

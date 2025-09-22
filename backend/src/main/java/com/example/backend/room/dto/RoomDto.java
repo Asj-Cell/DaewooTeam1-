@@ -1,10 +1,12 @@
 package com.example.backend.room.dto;
 
+import com.example.backend.room.entity.RoomImg;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 @Getter
 @NoArgsConstructor
@@ -17,6 +19,7 @@ public class RoomDto {
     private String view;
     private String bed;
     private Integer maxGuests;
+    private List<RoomImgDto> roomImages;
 }
 
 

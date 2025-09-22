@@ -3,6 +3,7 @@ package com.example.backend.favorites;
 import com.example.backend.feature.hotelfilters.dto.HotelDto;
 import com.example.backend.favorites.entity.Favorites;
 import com.example.backend.hotel.entity.Hotel;
+import com.example.backend.hotel.entity.HotelImage;
 import com.example.backend.room.entity.Room;
 import com.example.backend.review.ReviewRepository;
 import lombok.RequiredArgsConstructor;
@@ -33,6 +34,10 @@ public class FavoritesService {
                     long reviewCount = reviewRepository.countByHotelId(h.getId());
                     double avgRating = (totalRating != null && reviewCount > 0) ? totalRating / reviewCount : 0.0;
 
+                    List<String> hotelImageUrls = h.getImages().stream()
+                            .map(HotelImage::getImageUrl)
+                            .toList();
+
                     return new HotelDto(
                             h.getId(),
                             h.getName(),
@@ -41,7 +46,7 @@ public class FavoritesService {
                             countAmenities(h),
                             getLowestAvailablePrice(h),
                             avgRating,
-                            getRepresentativeImage(h),
+                            hotelImageUrls,
                             true, // 찜 여부 무조건 true
                             reviewCount
                     );
@@ -81,8 +86,4 @@ public class FavoritesService {
                 .orElse(BigDecimal.ZERO);
     }
 
-    private String getRepresentativeImage(Hotel h) {
-        // 임시 이미지
-        return "https://example.com/default-image.jpg";
-    }
 }

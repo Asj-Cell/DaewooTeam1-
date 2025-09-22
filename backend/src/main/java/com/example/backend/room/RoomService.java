@@ -1,6 +1,7 @@
 package com.example.backend.room;
 
 import com.example.backend.room.dto.RoomDto;
+import com.example.backend.room.dto.RoomImgDto;
 import com.example.backend.room.entity.Room;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -38,7 +39,10 @@ public class RoomService {
                 room.getPrice(),
                 room.getView(),
                 room.getBed(),
-                room.getMaxGuests()
+                room.getMaxGuests(),
+                room.getImages().stream()
+                        .map(img -> new RoomImgDto(img.getId(), img.getImageUrl(),img.getSize()))
+                        .collect(Collectors.toList())
         );
     }
 }

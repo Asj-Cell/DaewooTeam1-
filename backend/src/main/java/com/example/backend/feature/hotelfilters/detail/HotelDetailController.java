@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/hotels")
+@RequestMapping("/api/hotels/detail")
 public class HotelDetailController {
 
     private final HotelDetailService hotelDetailService;
@@ -19,7 +19,7 @@ public class HotelDetailController {
      *
      * 테스트 시 임시로 로그인 유저 ID 1 사용
      */
-    @GetMapping("/{hotelId}/detail")
+    @GetMapping("/{hotelId}")
     public ResponseEntity<HotelDetailDto> getHotelDetail(
             @PathVariable Long hotelId
     ) {
