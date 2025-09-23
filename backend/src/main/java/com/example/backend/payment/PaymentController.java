@@ -9,33 +9,35 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 @Tag(name = "Payment API", description = "결제 관련 API")
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/payments") // 기본 경로 변경
 @RequiredArgsConstructor
+@Tag(name = "Payment API", description = "✅ 인증 필요 | 결제 관련 API")
 public class PaymentController {
 
     private final PaymentService paymentService;
 
-    @Operation(summary = "결제 수단 추가 (임시 테스트용)", description = "특정 사용자의 결제 수단을 추가합니다.")
-    @PostMapping("/users/{userId}/payments")
+    @Operation(summary = "내 결제 수단 추가", description = "로그인한 사용자의 결제 수단을 추가합니다.")
+    @PostMapping("/me")
     public ResponseEntity<ApiResponse<PaymentResponseDto>> addUserPaymentMethod(
-            @PathVariable Long userId,
+            @AuthenticationPrincipal UserDetails userDetails,
             @Valid @RequestBody PaymentRequestDto requestDto) {
-
+        Long userId = Long.parseLong(userDetails.getUsername());
         PaymentResponseDto newPayment = paymentService.addPaymentMethod(userId, requestDto);
         return ResponseEntity.status(HttpStatus.CREATED).body(ApiResponse.success(newPayment));
     }
 
-
-    @Operation(summary = "특정 사용자의 결제 수단 삭제 (임시 테스트용)", description = "특정 사용자의 결제 수단을 삭제합니다.")
-    @DeleteMapping("/users/{userId}/payments/{paymentId}")
+    @Operation(summary = "내 결제 수단 삭제", description = "로그인한 사용자의 특정 결제 수단을 삭제합니다.")
+    @DeleteMapping("/me/{paymentId}")
     public ApiResponse<String> deleteUserPaymentMethod(
-                                                        @PathVariable Long userId,
-                                                        @PathVariable Long paymentId) {
-
+            @AuthenticationPrincipal UserDetails userDetails,
+            @PathVariable Long paymentId) {
+        Long userId = Long.parseLong(userDetails.getUsername());
         paymentService.deletePaymentMethod(paymentId, userId);
         return ApiResponse.success("결제 수단이 성공적으로 삭제되었습니다.");
     }
