@@ -29,9 +29,8 @@ import java.util.List;
 public class HotelFiltersController {
     private final HotelFiltersService hotelFiltersService;
 
-    //모든 편의시설 false, cityName= x
-    //    http://localhost:8888/api/hotels/filter?page=0&size=4&sortBy=rating&breakfastIncluded=false&freeParking=false&freeWifi=false&airportShuttlebus=false&freeCancellation=false&frontDesk24=false&airConditioner=false&fitnessCenter=false&pool=false&checkInDate=2025-10-01&checkOutDate=2025-10-05
-
+    //모든 편의시설 false, cityName= x, url로 페이지랑 사이즈를 받는데 기본값은 페이지 0이고 사이지는 4
+    //http://localhost:8888/api/hotels/filter?page=0&size=4&sortBy=rating&breakfastIncluded=false&freeParking=false&freeWifi=false&airportShuttlebus=false&freeCancellation=false&frontDesk24=false&airConditioner=false&fitnessCenter=false&pool=false&checkInDate=2025-10-01&checkOutDate=2025-10-05
     @GetMapping("/filter")
     public Map<String, Object> filterHotels(
             @RequestParam(required = false) String cityName,
@@ -51,8 +50,8 @@ public class HotelFiltersController {
             @RequestParam(required = false) String sortBy,
             @RequestParam(required = false) String checkInDate,
             @RequestParam(required = false) String checkOutDate,
-            @RequestParam int page,
-            @RequestParam int size
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "4") int size
     ) {
         Pageable pageable = PageRequest.of(page, size);
         // DTO로 변환
