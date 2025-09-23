@@ -17,8 +17,6 @@ public class UserProfileRequestDto {
     private String phoneNumber;
     private String address;
     private LocalDate birthDate;
-    private String imageUrl;
-    private String backGroundImageUrl;
 
     public UserProfileRequestDto(User user) {
         this.userId = user.getId();
@@ -27,7 +25,5 @@ public class UserProfileRequestDto {
         this.phoneNumber = user.getPhoneNumber();
         this.address = user.getAddress();
         this.birthDate = user.getBirthDate();
-        this.imageUrl = user.getImageUrl();
-        this.backGroundImageUrl = user.getBackGroundImageUrl();
     }
 }

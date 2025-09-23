@@ -45,9 +45,9 @@ public class ReviewService {
 
     // 리뷰 추가
     @Transactional
-    public ReviewResponseDto addReview(Long hotelId, ReviewRequestDto requestDto) {
-        User user = userRepository.findById(requestDto.getUserId())
-                .orElseThrow(() -> new IllegalArgumentException("해당 유저를 찾을 수 없습니다: " + requestDto.getUserId()));
+    public ReviewResponseDto addReview(Long hotelId, Long userId, ReviewRequestDto requestDto) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new IllegalArgumentException("해당 유저를 찾을 수 없습니다: " + userId));
 
         Hotel hotel = hotelRepository.findById(hotelId)
                 .orElseThrow(() -> new IllegalArgumentException("해당 호텔을 찾을 수 없습니다: " + hotelId));
@@ -56,7 +56,7 @@ public class ReviewService {
         review.setUser(user);
         review.setHotel(hotel);
         review.setContent(requestDto.getContent());
-        review.setUserRatingScore(requestDto.getUserRatingScore()); // Review reportYn은 일단 기본값 false 상태임 어캐 Json으로 줘야 하는지 모르곘음
+        review.setUserRatingScore(requestDto.getUserRatingScore());
         Review savedReview = reviewRepository.save(review);
         return new ReviewResponseDto(savedReview);
     }

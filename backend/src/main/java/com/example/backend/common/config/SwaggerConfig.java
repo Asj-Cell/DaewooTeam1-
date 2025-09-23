@@ -1,8 +1,11 @@
+// SwaggerConfig.java
 package com.example.backend.common.config;
 
 import io.swagger.v3.oas.models.Components;
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.info.Info;
+import io.swagger.v3.oas.models.security.SecurityRequirement;
+import io.swagger.v3.oas.models.security.SecurityScheme;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -13,11 +16,23 @@ public class SwaggerConfig {
     public OpenAPI openAPI() {
         Info info = new Info()
                 .title("여행 예약 프로젝트 API 문서")
-                .version("v1.0.0") // ..? 이렇게 쓰는거 맞나요
+                .version("v1.0.0")
                 .description("여행 예약 프로젝트의 API 명세서입니다.");
 
+        // API 요청 헤더에 인증 정보 추가
+        SecurityRequirement securityRequirement = new SecurityRequirement().addList("bearerAuth");
+
+        // 인증 방식 설정
+        Components components = new Components()
+                .addSecuritySchemes("bearerAuth", new SecurityScheme()
+                        .name("bearerAuth")
+                        .type(SecurityScheme.Type.HTTP)
+                        .scheme("bearer")
+                        .bearerFormat("JWT"));
+
         return new OpenAPI()
-                .components(new Components())
-                .info(info);
+                .info(info)
+                .addSecurityItem(securityRequirement)
+                .components(components);
     }
 }
