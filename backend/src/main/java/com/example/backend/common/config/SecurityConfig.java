@@ -39,7 +39,8 @@ public class SecurityConfig {
                                 "/v3/api-docs/**",
                                 "/api/travel-packages/**",
                                 "/api/hotels/filter",
-                                "/api/hotels/detail/**"
+                                "/api/hotels/detail/**",
+                                "/images/**"
                         ).permitAll()
                         .anyRequest().authenticated()
                 )
