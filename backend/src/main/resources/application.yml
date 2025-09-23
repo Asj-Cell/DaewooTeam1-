@@ -4,3 +4,9 @@ spring:
 
 server:
   port: 8888
+
+jwt:
+  secret:
+    key: a2F카오디오a2FkaW9kaW9kaW9kaW9kaW9kaW9kaW9kaW9kaW9kaW9kaW9kaW9kaW9kaW9kaW9kaW9kaW9kaW9kaW9kaW9kaW9kaQ==
+  token:
+    expiration-time: 3600000 # 1시간 (밀리초 단위)
