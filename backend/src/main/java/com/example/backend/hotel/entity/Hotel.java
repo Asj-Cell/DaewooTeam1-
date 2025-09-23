@@ -1,7 +1,7 @@
 package com.example.backend.hotel.entity;
 
 import com.example.backend.amenities.entity.Amenities;
-import com.example.backend.common.City;
+import com.example.backend.room.entity.Room;
 import jakarta.persistence.*;
 import lombok.*;
 

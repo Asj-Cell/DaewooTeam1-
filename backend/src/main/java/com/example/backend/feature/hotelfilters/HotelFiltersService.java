@@ -5,7 +5,8 @@ import com.example.backend.hotel.entity.Hotel;
 import com.example.backend.feature.hotelfilters.dto.HotelDto;
 import com.example.backend.feature.hotelfilters.dto.HotelFilterRequestDto;
 import com.example.backend.hotel.HotelRepository;
-import com.example.backend.hotel.entity.Room;
+import com.example.backend.hotel.entity.HotelImage;
+import com.example.backend.room.entity.Room;
 import com.example.backend.review.ReviewRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -17,12 +18,13 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
-@Transactional(readOnly = true)
+@Transactional
 public class HotelFiltersService {
 
     private final HotelRepository hotelRepository;
@@ -30,33 +32,26 @@ public class HotelFiltersService {
     private final FavoritesRepository favoritesRepository;
 
     public Page<HotelDto> filterHotels(HotelFilterRequestDto request, Pageable pageable) {
-        // 1. Specification으로 DB에서 필터 적용
+        // 1. Specification으로 DB에서 필터 적용, 전체 조회
         Specification<Hotel> spec = HotelSpecifications.withFilters(request);
+        List<Hotel> hotels = hotelRepository.findAll(spec);
 
-        // 2. DB 조회 + 페이징 처리
-        Page<Hotel> hotelPage = hotelRepository.findAll(spec, pageable);
+        Long loginUserId = (request.getLoginUser() != null) ? request.getLoginUser().getUserId() : null;
 
-        Long loginUserId;
-        if (request.getLoginUser() != null) {
-            loginUserId = request.getLoginUser().getUserId();
-        } else {
-            loginUserId = null;
-        }
-        // 3. DTO 변환 + 정렬
-        List<HotelDto> sortedDtos = hotelPage.stream()
+        // 2. DTO 변환 + Stream 필터 + 정렬
+        List<HotelDto> sortedDtos = hotels.stream()
                 .map(h -> {
                     // 리뷰 기반 평점 계산
                     Double totalRating = reviewRepository.findTotalRatingByHotelId(h.getId());
                     long reviewCount = reviewRepository.countByHotelId(h.getId());
                     double avgRating = (totalRating != null && reviewCount > 0) ? totalRating / reviewCount : 0.0;
 
-                    boolean isFavorite = false;
-                    if (request.getLoginUser() != null && request.getLoginUser().getUserId() != null) {
-                        isFavorite = favoritesRepository.existsByUser_IdAndHotel_Id(
-                                request.getLoginUser().getUserId(), h.getId()
-                        );
-                    }
+                    boolean isFavorite = (loginUserId != null) &&
+                            favoritesRepository.existsByUser_IdAndHotel_Id(loginUserId, h.getId());
 
+                    List<String> hotelImageUrls = h.getImages().stream()
+                            .map(HotelImage::getImageUrl)
+                            .toList();
 
                     return new HotelDto(
                             h.getId(),
@@ -66,29 +61,34 @@ public class HotelFiltersService {
                             countAmenities(h),
                             getLowestAvailablePrice(h, request),
                             avgRating,
-                            getRepresentativeImage(h),
-                            isFavorite
+                            hotelImageUrls,
+                            isFavorite,
+                            reviewCount
                     );
                 })
-
                 .filter(dto -> request.getMinAvgRating() == null || dto.getRating() >= request.getMinAvgRating())
-
-                .sorted((h1, h2) -> {
-                    // 정렬 기준에 따라 정렬
-                    if ("rating".equalsIgnoreCase(request.getSortBy())) {
-                        return Double.compare(h2.getRating(), h1.getRating()); // 평점 내림차순
-                    } else if ("priceAsc".equalsIgnoreCase(request.getSortBy())) {
-                        return h1.getPrice().compareTo(h2.getPrice());       // 가격 오름차순
-                    } else if ("priceDesc".equalsIgnoreCase(request.getSortBy())) {
-                        return h2.getPrice().compareTo(h1.getPrice());       // 가격 내림차순
-                    } else {
-                        return 0; // 기본: DB 순서, 아마 아이디 순으로 조회될겁니다
-                    }
-                })
+                .sorted(getComparator(request.getSortBy()))
                 .collect(Collectors.toList());
 
-        // 4. Stream 정렬 후 새 Page 객체 생성
-        return new PageImpl<>(sortedDtos, pageable, hotelPage.getTotalElements());
+        // 3. 정렬 후 메모리 페이징
+        int start = (int) pageable.getOffset();
+        int end = Math.min(start + pageable.getPageSize(), sortedDtos.size());
+        List<HotelDto> pageContent = sortedDtos.subList(start, end);
+
+        return new PageImpl<>(pageContent, pageable, sortedDtos.size());
+    }
+
+    // 정렬 기준 Comparator 반환
+    private Comparator<HotelDto> getComparator(String sortBy) {
+        if ("rating".equalsIgnoreCase(sortBy)) {
+            return Comparator.comparingDouble(HotelDto::getRating).reversed(); // 평점 내림차순
+        } else if ("priceAsc".equalsIgnoreCase(sortBy)) {
+            return Comparator.comparing(HotelDto::getPrice); // 가격 오름차순
+        } else if ("priceDesc".equalsIgnoreCase(sortBy)) {
+            return Comparator.comparing(HotelDto::getPrice).reversed(); // 가격 내림차순
+        } else {
+            return Comparator.comparingLong(HotelDto::getId); // 기본: ID 순
+        }
     }
 
     // 호텔이 가지고 있는 무료서비스 + 편의시설 카운트
@@ -131,11 +131,4 @@ public class HotelFiltersService {
                 .min(BigDecimal::compareTo)
                 .orElse(BigDecimal.ZERO);
     }
-
-
-    private String getRepresentativeImage(Hotel h) {
-        // 임시 이미지
-        return "https://example.com/default-image.jpg";
-    }
 }
-

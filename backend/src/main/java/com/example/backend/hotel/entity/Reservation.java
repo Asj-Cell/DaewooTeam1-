@@ -1,5 +1,6 @@
 package com.example.backend.hotel.entity;
 
+import com.example.backend.room.entity.Room;
 import com.example.backend.user.entity.User;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -7,8 +8,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
 
 @Getter @Setter
 @Entity
