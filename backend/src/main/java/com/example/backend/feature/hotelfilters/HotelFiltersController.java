@@ -6,6 +6,8 @@ import com.example.backend.user.dto.UserProfileRequestDto;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -33,6 +35,7 @@ public class HotelFiltersController {
     //http://localhost:8888/api/hotels/filter?page=0&size=4&sortBy=rating&breakfastIncluded=false&freeParking=false&freeWifi=false&airportShuttlebus=false&freeCancellation=false&frontDesk24=false&airConditioner=false&fitnessCenter=false&pool=false&checkInDate=2025-10-01&checkOutDate=2025-10-05
     @GetMapping("/filter")
     public Map<String, Object> filterHotels(
+            @AuthenticationPrincipal UserDetails userDetails,
             @RequestParam(required = false) String cityName,
             @RequestParam(required = false) Boolean breakfastIncluded,
             @RequestParam(required = false) Boolean freeParking,
@@ -53,6 +56,7 @@ public class HotelFiltersController {
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "4") int size
     ) {
+        Long loginUserId = (userDetails != null) ? Long.parseLong(userDetails.getUsername()) : null;
         Pageable pageable = PageRequest.of(page, size);
         // DTO로 변환
         HotelFilterRequestDto request = new HotelFilterRequestDto();
@@ -75,7 +79,7 @@ public class HotelFiltersController {
         if (checkInDate != null) request.setCheckInDate(LocalDate.parse(checkInDate));
         if (checkOutDate != null) request.setCheckOutDate(LocalDate.parse(checkOutDate));
 
-        Page<HotelDto> hotelPage = hotelFiltersService.filterHotels(request, pageable);
+        Page<HotelDto> hotelPage = hotelFiltersService.filterHotels(request, pageable, loginUserId);
 
         Map<String, Object> response = new HashMap<>();
         response.put("hotels", hotelPage.getContent());
