@@ -50,20 +50,32 @@ public class UserService {
         return backgroundImageUrl; // 새로 업데이트된 이미지 URL 반환
     }
 
-    // (선택사항) 프로필 텍스트 정보 업데이트 로직
     @Transactional
     public UserProfileAllResponseDto updateUserProfileInfo(Long userId, UserProfileRequestDto requestDto) {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new IllegalArgumentException("사용자를 찾을 수 없습니다. ID: " + userId));
 
-        user.setUserName(requestDto.getUserName());
-        user.setAddress(requestDto.getAddress());
-        // 필요에 따라 다른 필드들도 업데이트
+        // DTO에 포함된 모든 필드를 업데이트하도록 로직 확장
+        // 요청에 값이 있는 경우에만 업데이트하여 부분 수정이 가능하도록 함
+        if (requestDto.getUserName() != null) {
+            user.setUserName(requestDto.getUserName());
+        }
+        if (requestDto.getEmail() != null) {
+            user.setEmail(requestDto.getEmail());
+        }
+        if (requestDto.getPhoneNumber() != null) {
+            user.setPhoneNumber(requestDto.getPhoneNumber());
+        }
+        if (requestDto.getAddress() != null) {
+            user.setAddress(requestDto.getAddress());
+        }
+        if (requestDto.getBirthDate() != null) {
+            user.setBirthDate(requestDto.getBirthDate());
+        }
 
         User updatedUser = userRepository.save(user);
         return new UserProfileAllResponseDto(updatedUser);
     }
-
 
 
 
