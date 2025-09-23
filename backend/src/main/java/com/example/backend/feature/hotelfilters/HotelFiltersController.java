@@ -16,6 +16,8 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -27,50 +29,52 @@ import java.util.List;
 public class HotelFiltersController {
     private final HotelFiltersService hotelFiltersService;
 
-    /**
-     * 호텔 필터 조회
-     * POST 방식으로 필터 요청
-     * @param request : 사용자가 선택한 필터
-     * @param page : 페이지 번호 (0부터 시작)
-     * @param size : 한 페이지에 가져올 호텔 개수
-     * @return : 호텔 리스트 + 전체 호텔 수
-     *
-     *
-     * http://localhost:8888/api/hotels/filter?page=0&size=4 주소
-     *
-     * 모든 조건, 임시(아이디 순으로) 첫번째 페이지에 4개씩 불러오는
-     * {
-     *   "breakfastIncluded": null,
-     *   "freeParking": null,
-     *   "freeWifi": null,
-     *   "airportShuttlebus": null,
-     *   "freeCancellation": null,
-     *   "frontDesk24": null,
-     *   "airConditioner": null,
-     *   "fitnessCenter": null,
-     *   "Pool": null,
-     *   "minGrade": null,
-     *   "minprice": null,
-     *   "maxprice": null,
-     *   "page": 0,
-     *   "size": 4
-     *
-     *
-     *
-     *   정렬관련 손다시 봐야함
-     * }
-     */
-
-    @PostMapping("/filter")
+    //모든 편의시설 false, cityName= x, url로 페이지랑 사이즈를 받는데 기본값은 페이지 0이고 사이지는 4
+    //http://localhost:8888/api/hotels/filter?page=0&size=4&sortBy=rating&breakfastIncluded=false&freeParking=false&freeWifi=false&airportShuttlebus=false&freeCancellation=false&frontDesk24=false&airConditioner=false&fitnessCenter=false&pool=false&checkInDate=2025-10-01&checkOutDate=2025-10-05
+    @GetMapping("/filter")
     public Map<String, Object> filterHotels(
-            @RequestBody HotelFilterRequestDto request,
-            @RequestParam int page,
-            @RequestParam int size
+            @RequestParam(required = false) String cityName,
+            @RequestParam(required = false) Boolean breakfastIncluded,
+            @RequestParam(required = false) Boolean freeParking,
+            @RequestParam(required = false) Boolean freeWifi,
+            @RequestParam(required = false) Boolean airportShuttlebus,
+            @RequestParam(required = false) Boolean freeCancellation,
+            @RequestParam(required = false) Boolean frontDesk24,
+            @RequestParam(required = false) Boolean airConditioner,
+            @RequestParam(required = false) Boolean fitnessCenter,
+            @RequestParam(required = false) Boolean pool,
+            @RequestParam(required = false) Integer minAvgRating,
+            @RequestParam(required = false) BigDecimal minPrice,
+            @RequestParam(required = false) BigDecimal maxPrice,
+            @RequestParam(required = false) Integer minAvailableRooms,
+            @RequestParam(required = false) String sortBy,
+            @RequestParam(required = false) String checkInDate,
+            @RequestParam(required = false) String checkOutDate,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "4") int size
     ) {
-        UserProfileRequestDto uprd = new UserProfileRequestDto();
-        uprd.setUserId(1L);
-        request.setLoginUser(uprd);
         Pageable pageable = PageRequest.of(page, size);
+        // DTO로 변환
+        HotelFilterRequestDto request = new HotelFilterRequestDto();
+        request.setCityName(cityName);
+        request.setBreakfastIncluded(breakfastIncluded);
+        request.setFreeParking(freeParking);
+        request.setFreeWifi(freeWifi);
+        request.setAirportShuttlebus(airportShuttlebus);
+        request.setFreeCancellation(freeCancellation);
+        request.setFrontDesk24(frontDesk24);
+        request.setAirConditioner(airConditioner);
+        request.setFitnessCenter(fitnessCenter);
+        request.setPool(pool);
+        request.setMinAvgRating(minAvgRating);
+        request.setMinPrice(minPrice);
+        request.setMaxPrice(maxPrice);
+        request.setMinAvailableRooms(minAvailableRooms);
+        request.setSortBy(sortBy);
+
+        if (checkInDate != null) request.setCheckInDate(LocalDate.parse(checkInDate));
+        if (checkOutDate != null) request.setCheckOutDate(LocalDate.parse(checkOutDate));
+
         Page<HotelDto> hotelPage = hotelFiltersService.filterHotels(request, pageable);
 
         Map<String, Object> response = new HashMap<>();
