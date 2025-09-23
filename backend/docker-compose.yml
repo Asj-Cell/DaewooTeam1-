@@ -18,7 +18,8 @@ services:
 #    restart: always
 
   boot-app:
-    image: asjcell/backend_image:v1.0.0
+    image: asjcell/backend_image:v1.0.1
+    
 #    build:
 #      context: ./
 #      dockerfile: dockerfile
