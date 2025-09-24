@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.Random;
 import java.util.UUID;
 
 @Service
@@ -57,7 +58,10 @@ public class AuthService {
         User user = userRepository.findByEmail(email)
                 .orElseThrow(() -> new IllegalArgumentException("해당 이메일을 가진 사용자를 찾을 수 없습니다."));
 
-        String token = UUID.randomUUID().toString();
+        Random random = new Random();
+        int code = 100000 + random.nextInt(900000);
+        String token = String.valueOf(code);
+
         user.setResetToken(token);
         user.setResetTokenExpiry(LocalDateTime.now().plusHours(1)); // 토큰 유효시간: 1시간
         userRepository.save(user);
