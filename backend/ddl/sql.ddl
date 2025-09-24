@@ -37,10 +37,8 @@ DROP TABLE IF EXISTS `user`;
 
 
 --
--- Table structure for table `user`
+-- Table: user
 --
-DROP TABLE IF EXISTS `user`; -- 기존 테이블이 있다면 삭제하고 다시 생성
-
 CREATE TABLE `user` (
                         `id` bigint(20) NOT NULL AUTO_INCREMENT,
                         `user_name` varchar(100) NOT NULL,
@@ -59,9 +57,6 @@ CREATE TABLE `user` (
                         UNIQUE KEY `UK_email` (`email`)                -- 이메일 중복 방지
 ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
---
--- Dumping data for table `user`
---
 LOCK TABLES `user` WRITE;
 -- 비밀번호는 'password123'을 BCrypt로 암호화한 예시 값입니다.
 -- enabled는 '1' (true)로 설정하여 바로 로그인 테스트를 할 수 있도록 했습니다.
@@ -72,12 +67,11 @@ VALUES
     (3,'박준호','junho.park@example.com','$2a$10$E.mWM8vu38a6a5D202b.Oue26a20bX.Jg28g2g2f2g2h2h2i2i2j2','010-3456-7890','인천시 연수구','1988-08-10','http://example.com/images/junho.jpg','http://example.com/images/junho_bg.jpg',1),
     (4,'최지우','jiwoo.choi@example.com','$2a$10$E.mWM8vu38a6a5D202b.Oue26a20bX.Jg28g2g2f2g2h2h2i2i2j2','010-4567-8901','대구시 수성구','1995-11-25','http://example.com/images/jiwoo.jpg','http://example.com/images/jiwoo_bg.jpg',1),
     (5,'정유진','yujin.jung@example.com','$2a$10$E.mWM8vu38a6a5D202b.Oue26a20bX.Jg28g2g2f2g2h2h2i2i2j2','010-5678-9012','광주시 서구','1998-03-30','http://example.com/images/yujin.jpg','http://example.com/images/yujin_bg.jpg',1);
-
 UNLOCK TABLES;
 
 
 --
--- Table structure for table `city`
+-- Table: city
 --
 CREATE TABLE `city` (
                         `id` bigint(20) NOT NULL AUTO_INCREMENT,
@@ -85,16 +79,13 @@ CREATE TABLE `city` (
                         PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
---
--- Dumping data for table `city`
---
 LOCK TABLES `city` WRITE;
 INSERT INTO `city` VALUES (1,'서울'),(2,'부산'),(3,'제주'),(4,'인천'),(5,'경주');
 UNLOCK TABLES;
 
 
 --
--- Table structure for table `hotel`
+-- Table: hotel
 --
 CREATE TABLE `hotel` (
                          `id` bigint(20) NOT NULL AUTO_INCREMENT,
@@ -112,15 +103,13 @@ CREATE TABLE `hotel` (
                          CONSTRAINT `FK_hotel_to_city` FOREIGN KEY (`city_id`) REFERENCES `city` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
---
--- Dumping data for table `hotel`
---
 LOCK TABLES `hotel` WRITE;
 INSERT INTO `hotel` VALUES (1,'서울시 중구 동호로 249','15:00:00.000000','12:00:00.000000',5,37.5558,127.0053,'신라호텔','최고급 호텔',1),(2,'부산시 해운대구 해운대해변로 296','15:00:00.000000','11:00:00.000000',5,35.1598,129.1603,'파라다이스 호텔 부산','해운대 해변에 위치한 럭셔리 호텔',2),(3,'제주특별자치도 서귀포시 중문관광로72번길 35','14:00:00.000000','11:00:00.000000',5,33.2476,126.4107,'롯데호텔 제주','중문관광단지에 위치한 리조트형 호텔',3),(4,'인천시 연수구 테크노파크로 200','15:00:00.000000','11:00:00.000000',5,37.3947,126.6384,'경원재 앰배서더 인천','한옥 호텔',4),(5,'경북 경주시 보문로 484-7','15:00:00.000000','11:00:00.000000',5,35.84,129.2818,'힐튼 경주','보문호수에 위치한 호텔',5);
 UNLOCK TABLES;
 
+
 --
--- Table structure for table `amenities`
+-- Table: amenities
 --
 CREATE TABLE `amenities` (
                              `id` bigint(20) NOT NULL AUTO_INCREMENT,
@@ -138,18 +127,15 @@ CREATE TABLE `amenities` (
                              PRIMARY KEY (`id`),
                              UNIQUE KEY `UK_amenities_hotel_id` (`hotel_id`),
                              CONSTRAINT `FK_amenities_to_hotel` FOREIGN KEY (`hotel_id`) REFERENCES `hotel` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
---
--- Dumping data for table `amenities`
---
 LOCK TABLES `amenities` WRITE;
 INSERT INTO `amenities` VALUES (1,1,1,1,1,1,1,1,1,1,1,1),(2,1,1,1,1,0,1,1,1,1,1,2),(3,1,1,1,1,1,1,1,1,1,1,3),(4,1,0,0,1,0,0,1,1,0,1,4),(5,1,1,1,1,1,1,1,1,1,1,5);
 UNLOCK TABLES;
 
 
 --
--- Table structure for table `freebies`
+-- Table: freebies
 --
 CREATE TABLE `freebies` (
                             `id` bigint(20) NOT NULL AUTO_INCREMENT,
@@ -162,18 +148,15 @@ CREATE TABLE `freebies` (
                             PRIMARY KEY (`id`),
                             UNIQUE KEY `UK_freebies_hotel_id` (`hotel_id`),
                             CONSTRAINT `FK_freebies_to_hotel` FOREIGN KEY (`hotel_id`) REFERENCES `hotel` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
---
--- Dumping data for table `freebies`
---
 LOCK TABLES `freebies` WRITE;
 INSERT INTO `freebies` VALUES (1,1,1,1,1,1,1),(2,0,0,1,1,1,2),(3,1,1,0,1,1,3),(4,0,1,1,1,1,4),(5,0,0,1,1,1,5);
 UNLOCK TABLES;
 
 
 --
--- Table structure for table `room`
+-- Table: room
 --
 CREATE TABLE `room` (
                         `id` bigint(20) NOT NULL AUTO_INCREMENT,
@@ -189,46 +172,33 @@ CREATE TABLE `room` (
                         CONSTRAINT `FK_room_to_hotel` FOREIGN KEY (`hotel_id`) REFERENCES `hotel` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
---
--- Dumping data for table `room`
---
 LOCK TABLES `room` WRITE;
-INSERT INTO `room` (`bed`, `max_guests`, `name`, `price`, `room_number`, `view`, `hotel_id`) VALUES
--- Hotel 1 Rooms
-('더블 베드', 2, '스탠다드 룸', 250000.00, '101', '시티 뷰', 1),
-('킹 베드', 2, '디럭스 룸', 350000.00, '102', '시티 뷰', 1),
-('트윈 베드', 2, '스탠다드 트윈', 270000.00, '103', '가든 뷰', 1),
-('킹 베드', 3, '주니어 스위트', 500000.00, '104', '시티 뷰', 1),
-
--- Hotel 2 Rooms
-('더블 베드', 2, '스탠다드 오션', 300000.00, '201', '오션 뷰', 2),
-('킹 베드', 2, '디럭스 오션', 400000.00, '202', '오션 뷰', 2),
-('더블 베드 2개', 4, '패밀리 스위트', 550000.00, '203', '오션 뷰', 2),
-('킹 베드', 3, '프리미어 스위트', 700000.00, '204', '파노라마 오션 뷰', 2),
-
--- Hotel 3 Rooms
-('퀸 베드', 2, '슈페리어 룸', 220000.00, '301', '마운틴 뷰', 3),
-('킹 베드', 2, '디럭스 룸', 300000.00, '302', '마운틴 뷰', 3),
-('트윈 베드', 4, '패밀리 룸', 380000.00, '303', '가든 뷰', 3),
-('킹 베드', 2, '이그제큐티브 룸', 450000.00, '304', '마운틴 뷰', 3),
-
--- Hotel 4 Rooms
-('더블 베드', 2, '게스트 룸', 180000.00, '401', '시티 뷰', 4),
-('킹 베드', 3, '스위트 룸', 280000.00, '402', '파크 뷰', 4),
-('트윈 베드 2개', 4, '커넥팅 룸', 350000.00, '403', '시티 뷰', 4),
-('킹 베드', 4, '펜트하우스', 800000.00, '404', '스카이라인 뷰', 4),
-
--- Hotel 5 Rooms
-('싱글 베드', 1, '스탠다드 싱글', 150000.00, '501', '가든 뷰', 5),
-('더블 베드', 2, '스탠다드 더블', 200000.00, '502', '가든 뷰', 5),
-('트윈 베드', 3, '디럭스 트윈', 280000.00, '503', '풀 뷰', 5),
-('킹 베드', 2, '스위트 룸', 400000.00, '504', '풀 뷰', 5);
-
+INSERT INTO `room` (`id`, `bed`, `max_guests`, `name`, `price`, `room_number`, `view`, `hotel_id`) VALUES
+                                                                                                       (1, '더블 베드', 2, '스탠다드 룸', 250000.00, '101', '시티 뷰', 1),
+                                                                                                       (2, '킹 베드', 2, '디럭스 룸', 350000.00, '102', '시티 뷰', 1),
+                                                                                                       (3, '트윈 베드', 2, '스탠다드 트윈', 270000.00, '103', '가든 뷰', 1),
+                                                                                                       (4, '킹 베드', 3, '주니어 스위트', 500000.00, '104', '시티 뷰', 1),
+                                                                                                       (5, '더블 베드', 2, '스탠다드 오션', 300000.00, '201', '오션 뷰', 2),
+                                                                                                       (6, '킹 베드', 2, '디럭스 오션', 400000.00, '202', '오션 뷰', 2),
+                                                                                                       (7, '더블 베드 2개', 4, '패밀리 스위트', 550000.00, '203', '오션 뷰', 2),
+                                                                                                       (8, '킹 베드', 3, '프리미어 스위트', 700000.00, '204', '파노라마 오션 뷰', 2),
+                                                                                                       (9, '퀸 베드', 2, '슈페리어 룸', 220000.00, '301', '마운틴 뷰', 3),
+                                                                                                       (10, '킹 베드', 2, '디럭스 룸', 300000.00, '302', '마운틴 뷰', 3),
+                                                                                                       (11, '트윈 베드', 4, '패밀리 룸', 380000.00, '303', '가든 뷰', 3),
+                                                                                                       (12, '킹 베드', 2, '이그제큐티브 룸', 450000.00, '304', '마운틴 뷰', 3),
+                                                                                                       (13, '더블 베드', 2, '게스트 룸', 180000.00, '401', '시티 뷰', 4),
+                                                                                                       (14, '킹 베드', 3, '스위트 룸', 280000.00, '402', '파크 뷰', 4),
+                                                                                                       (15, '트윈 베드 2개', 4, '커넥팅 룸', 350000.00, '403', '시티 뷰', 4),
+                                                                                                       (16, '킹 베드', 4, '펜트하우스', 800000.00, '404', '스카이라인 뷰', 4),
+                                                                                                       (17, '싱글 베드', 1, '스탠다드 싱글', 150000.00, '501', '가든 뷰', 5),
+                                                                                                       (18, '더블 베드', 2, '스탠다드 더블', 200000.00, '502', '가든 뷰', 5),
+                                                                                                       (19, '트윈 베드', 3, '디럭스 트윈', 280000.00, '503', '풀 뷰', 5),
+                                                                                                       (20, '킹 베드', 2, '스위트 룸', 400000.00, '504', '풀 뷰', 5);
 UNLOCK TABLES;
 
 
 --
--- Table structure for table `hotel_image`
+-- Table: hotel_image
 --
 CREATE TABLE `hotel_image` (
                                `id` bigint(20) NOT NULL AUTO_INCREMENT,
@@ -241,9 +211,6 @@ CREATE TABLE `hotel_image` (
                                CONSTRAINT `FK_hotel_image_to_hotel` FOREIGN KEY (`hotel_id`) REFERENCES `hotel` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
---
--- Dumping data for table `hotel_image`
---
 LOCK TABLES `hotel_image` WRITE;
 INSERT INTO `hotel_image` (`image_url`, `sequence`, `size`, `hotel_id`) VALUES
                                                                             ('/images/hotel1/hotel1_main.png', 1, 1024, 1),
@@ -255,7 +222,45 @@ UNLOCK TABLES;
 
 
 --
--- Table structure for table `travel_package`
+-- Table: room_img
+--
+CREATE TABLE `room_img` (
+                            `id` bigint(20) NOT NULL AUTO_INCREMENT,
+                            `image_url` varchar(255) NOT NULL,
+                            `size` int(11) NOT NULL,
+                            `room_id` bigint(20) NOT NULL,
+                            PRIMARY KEY (`id`),
+                            KEY `FK_room_img_room` (`room_id`),
+                            CONSTRAINT `FK_room_img_room` FOREIGN KEY (`room_id`) REFERENCES `room` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+LOCK TABLES `room_img` WRITE;
+INSERT INTO `room_img` (`image_url`, `size`, `room_id`) VALUES
+                                                            ('/images/hotel1/hotel1_room1.png', 1024, 1),
+                                                            ('/images/hotel1/hotel1_room2.png', 1024, 2),
+                                                            ('/images/hotel1/hotel1_room3.png', 1024, 3),
+                                                            ('/images/hotel1/hotel1_room4.png', 1024, 4),
+                                                            ('/images/hotel2/hotel2_room1.png', 1024, 5),
+                                                            ('/images/hotel2/hotel2_room2.png', 1024, 6),
+                                                            ('/images/hotel2/hotel2_room3.png', 1024, 7),
+                                                            ('/images/hotel2/hotel2_room4.png', 1024, 8),
+                                                            ('/images/hotel3/hotel3_room1.png', 1024, 9),
+                                                            ('/images/hotel3/hotel3_room2.png', 1024, 10),
+                                                            ('/images/hotel3/hotel3_room3.png', 1024, 11),
+                                                            ('/images/hotel3/hotel3_room4.png', 1024, 12),
+                                                            ('/images/hotel4/hotel4_room1.png', 1024, 13),
+                                                            ('/images/hotel4/hotel4_room2.png', 1024, 14),
+                                                            ('/images/hotel4/hotel4_room3.png', 1024, 15),
+                                                            ('/images/hotel4/hotel4_room4.png', 1024, 16),
+                                                            ('/images/hotel5/hotel5_room1.png', 1024, 17),
+                                                            ('/images/hotel5/hotel5_room2.png', 1024, 18),
+                                                            ('/images/hotel5/hotel5_room3.png', 1024, 19),
+                                                            ('/images/hotel5/hotel5_room4.png', 1024, 20);
+UNLOCK TABLES;
+
+
+--
+-- Table: travel_package
 --
 CREATE TABLE `travel_package` (
                                   `id` bigint(20) NOT NULL AUTO_INCREMENT,
@@ -270,16 +275,13 @@ CREATE TABLE `travel_package` (
                                   CONSTRAINT `FK_travel_package_to_city` FOREIGN KEY (`city_id`) REFERENCES `city` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
---
--- Dumping data for table `travel_package`
---
 LOCK TABLES `travel_package` WRITE;
 INSERT INTO `travel_package` VALUES (1,'서울의 주요 관광지를 둘러보는 패키지','2024-06-12',350000.00,'2024-06-10','서울 2박 3일 시티 투어',1),(2,'부산의 맛집을 탐방하는 미식 여행 패키지','2024-07-18',450000.00,'2024-07-15','부산 3박 4일 미식 여행',2),(3,'제주의 자연 속에서 힐링하는 여행','2024-08-24',550000.00,'2024-08-20','제주 4박 5일 힐링 여행',3),(4,'인천 차이나타운과 개항장 거리를 둘러보는 패키지','2024-09-06',150000.00,'2024-09-05','인천 1박 2일 차이나타운 투어',4),(5,'신라의 역사를 따라 떠나는 여행','2024-10-12',250000.00,'2024-10-10','경주 2박 3일 역사 여행',5),(6,'시간이 멈춘 도시, 말라카에서 과거로의 여행을 떠나보세요. 유네스코 세계문화유산을 거닐며 역사와 낭만을 동시에 느낄 수 있습니다.','2025-10-05',700.00,'2025-10-01','말라카 투어',5),(7,'활기찬 도시 멜버른의 매력에 빠져보세요.','2025-11-15',130000.00,'2025-11-10','Melbourne Journey',4),(8,'예술과 낭만의 도시 파리를 탐험하는 시간.','2025-12-06',150000.00,'2025-12-01','파리 Adventure',2),(9,'전통과 현대가 공존하는 런던의 모든 것.','2025-12-25',130000.00,'2025-12-20','런던 Classic',3);
 UNLOCK TABLES;
 
 
 --
--- Table structure for table `package_image`
+-- Table: package_image
 --
 CREATE TABLE `package_image` (
                                  `id` bigint(20) NOT NULL AUTO_INCREMENT,
@@ -290,16 +292,13 @@ CREATE TABLE `package_image` (
                                  CONSTRAINT `FK_package_image_to_package` FOREIGN KEY (`package_id`) REFERENCES `travel_package` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
---
--- Dumping data for table `package_image`
---
 LOCK TABLES `package_image` WRITE;
 INSERT INTO `package_image` VALUES (1,'http://example.com/images/seoul_tour.jpg',1),(2,'http://example.com/images/busan_food.jpg',2),(3,'http://example.com/images/jeju_healing.jpg',3),(4,'http://example.com/images/incheon_chinatown.jpg',4),(5,'http://example.com/images/gyeongju_history.jpg',5),(6,'https://example.com/images/malacca_tour_1.jpg',1),(7,'https://example.com/images/malacca_tour_2.jpg',1),(8,'https://example.com/images/malacca_tour_3.jpg',1),(9,'https://example.com/images/melbourne_journey.jpg',2),(10,'https://example.com/images/paris_adventure.jpg',3),(11,'https://example.com/images/london_classic.jpg',4);
 UNLOCK TABLES;
 
 
 --
--- Table structure for table `favorites`
+-- Table: favorites
 --
 CREATE TABLE `favorites` (
                              `id` bigint(20) NOT NULL AUTO_INCREMENT,
@@ -312,15 +311,13 @@ CREATE TABLE `favorites` (
                              CONSTRAINT `FK_favorites_to_user` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
---
--- Dumping data for table `favorites`
---
 LOCK TABLES `favorites` WRITE;
+-- No initial favorites data
 UNLOCK TABLES;
 
 
 --
--- Table structure for table `review`
+-- Table: review
 --
 CREATE TABLE `review` (
                           `id` bigint(20) NOT NULL AUTO_INCREMENT,
@@ -336,16 +333,13 @@ CREATE TABLE `review` (
                           CONSTRAINT `FK_review_to_user` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
---
--- Dumping data for table `review`
---
 LOCK TABLES `review` WRITE;
 INSERT INTO `review` VALUES (1,'서비스가 매우 만족스러웠습니다. 직원들이 친절하고 시설도 깨끗합니다.',0,4.5,1,1),(2,'오션 뷰가 정말 멋졌어요. 다시 방문하고 싶습니다.',0,5,2,2),(3,'가족 여행에 최고였습니다. 아이들이 좋아했어요.',0,4,3,3),(4,'조용하고 편안한 분위기에서 잘 쉬었습니다.',0,4.8,4,4),(5,'가격 대비 만족도가 높았습니다. 추천합니다.',0,4.2,5,5);
 UNLOCK TABLES;
 
 
 --
--- Table structure for table `reservation`
+-- Table: reservation
 --
 CREATE TABLE `reservation` (
                                `id` bigint(20) NOT NULL AUTO_INCREMENT,
@@ -363,16 +357,18 @@ CREATE TABLE `reservation` (
                                CONSTRAINT `FK_reservation_to_user` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
---
--- Dumping data for table `reservation`
---
 LOCK TABLES `reservation` WRITE;
-INSERT INTO `reservation` VALUES (6,'2024-01-10','2024-01-12',50000.00,25000.00,575000.00,1,1),(7,'2024-02-15','2024-02-18',100000.00,50000.00,1200000.00,2,2),(8,'2024-03-20','2024-03-22',30000.00,15000.00,485000.00,3,3),(9,'2024-04-05','2024-04-07',70000.00,35000.00,665000.00,4,4),(10,'2024-05-25','2024-05-27',20000.00,10000.00,390000.00,5,5);
+INSERT INTO `reservation` (`id`, `check_in_date`, `check_out_date`, `discount`, `taxes`, `total_price`, `room_id`, `user_id`) VALUES
+                                                                                                                                  (1,'2024-01-10','2024-01-12',50000.00,25000.00,575000.00,1,1),
+                                                                                                                                  (2,'2024-02-15','2024-02-18',100000.00,50000.00,1200000.00,6,2),
+                                                                                                                                  (3,'2024-03-20','2024-03-22',30000.00,15000.00,485000.00,9,3),
+                                                                                                                                  (4,'2024-04-05','2024-04-07',70000.00,35000.00,665000.00,13,4),
+                                                                                                                                  (5,'2024-05-25','2024-05-27',20000.00,10000.00,390000.00,17,5);
 UNLOCK TABLES;
 
 
 --
--- Table structure for table `payment`
+-- Table: payment
 --
 CREATE TABLE `payment` (
                            `id` bigint(20) NOT NULL AUTO_INCREMENT,
@@ -390,16 +386,13 @@ CREATE TABLE `payment` (
                            CONSTRAINT `FK_payment_to_user` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
---
--- Dumping data for table `payment`
---
 LOCK TABLES `payment` WRITE;
 INSERT INTO `payment` VALUES (1,'김민준','대한민국','123','2025-12-31','신한카드','1234-5678-9012-3456','2023-01-15 10:00:00.000000',1,0),(2,'이서연','대한민국','234','2026-11-30','국민카드','2345-6789-0123-4567','2023-02-20 11:30:00.000000',2,0),(3,'박준호','대한민국','345','2027-10-31','삼성카드','3456-7890-1234-5678','2023-03-25 14:00:00.000000',3,0),(4,'최지우','대한민국','456','2028-09-30','현대카드','4567-8901-2345-6789','2023-04-10 16:45:00.000000',4,0),(5,'정유진','대한민국','567','2029-08-31','우리카드','5678-9012-3456-7890','2023-05-12 18:20:00.000000',5,0);
 UNLOCK TABLES;
 
 
 --
--- Table structure for table `pay`
+-- Table: pay
 --
 CREATE TABLE `pay` (
                        `id` BIGINT NOT NULL AUTO_INCREMENT,
@@ -413,68 +406,10 @@ CREATE TABLE `pay` (
                        CONSTRAINT `FK_pay_to_payment` FOREIGN KEY (`payment_id`) REFERENCES `payment` (`id`),
                        CONSTRAINT `FK_pay_to_user` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`),
                        CONSTRAINT `FK_pay_to_reservation` FOREIGN KEY (`reservation_id`) REFERENCES `reservation` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
---
--- Dumping data for table `pay`
---
 LOCK TABLES `pay` WRITE;
-INSERT INTO `pay` VALUES (1,'카카오페이','2024-01-10 14:00:00.000000',575000.00,1,1,6),(2,'네이버페이','2024-02-15 16:30:00.000000',1200000.00,2,2,7),(3,'토스페이','2024-03-20 18:00:00.000000',485000.00,3,3,8),(4,'신용카드','2024-04-05 20:15:00.000000',665000.00,4,4,9),(5,'계좌이체','2024-05-25 22:00:00.000000',390000.00,5,5,10);
-UNLOCK TABLES;
-
-
-
---
--- Table structure for table `room_img`
---
-CREATE TABLE `room_img` (
-                            `id` bigint(20) NOT NULL AUTO_INCREMENT,
-                            `image_url` varchar(255) NOT NULL,
-                            `size` int(11) NOT NULL,
-                            `room_id` bigint(20) NOT NULL,
-                            PRIMARY KEY (`id`),
-                            KEY `FK_room_img_room` (`room_id`),
-                            CONSTRAINT `FK_room_img_room` FOREIGN KEY (`room_id`) REFERENCES `room` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Dumping data for table `room_img`
---
--- 참고: 이 스크립트는 'room' 테이블이 비워진 상태에서
--- Canvas의 'room_data.sql' 스크립트를 실행하여 room ID가 1부터 20까지 생성되었다고 가정합니다.
--- 만약 실제 room ID가 다르다면, 아래 'room_id' 값을 직접 수정해주세요.
---
-LOCK TABLES `room_img` WRITE;
-INSERT INTO `room_img` (`image_url`, `size`, `room_id`) VALUES
--- Hotel 1 Room Images (Room IDs: 1-4)
-('/images/hotel1/hotel1_room1.png', 1024, 1),
-('/images/hotel1/hotel1_room2.png', 1024, 2),
-('/images/hotel1/hotel1_room3.png', 1024, 3),
-('/images/hotel1/hotel1_room4.png', 1024, 4),
-
--- Hotel 2 Room Images (Room IDs: 5-8)
-('/images/hotel2/hotel2_room1.png', 1024, 5),
-('/images/hotel2/hotel2_room2.png', 1024, 6),
-('/images/hotel2/hotel2_room3.png', 1024, 7),
-('/images/hotel2/hotel2_room4.png', 1024, 8),
-
--- Hotel 3 Room Images (Room IDs: 9-12)
-('/images/hotel3/hotel3_room1.png', 1024, 9),
-('/images/hotel3/hotel3_room2.png', 1024, 10),
-('/images/hotel3/hotel3_room3.png', 1024, 11),
-('/images/hotel3/hotel3_room4.png', 1024, 12),
-
--- Hotel 4 Room Images (Room IDs: 13-16)
-('/images/hotel4/hotel4_room1.png', 1024, 13),
-('/images/hotel4/hotel4_room2.png', 1024, 14),
-('/images/hotel4/hotel4_room3.png', 1024, 15),
-('/images/hotel4/hotel4_room4.png', 1024, 16),
-
--- Hotel 5 Room Images (Room IDs: 17-20)
-('/images/hotel5/hotel5_room1.png', 1024, 17),
-('/images/hotel5/hotel5_room2.png', 1024, 18),
-('/images/hotel5/hotel5_room3.png', 1024, 19),
-('/images/hotel5/hotel5_room4.png', 1024, 20);
+INSERT INTO `pay` VALUES (1,'카카오페이','2024-01-10 14:00:00.000000',575000.00,1,1,1),(2,'네이버페이','2024-02-15 16:30:00.000000',1200000.00,2,2,2),(3,'토스페이','2024-03-20 18:00:00.000000',485000.00,3,3,3),(4,'신용카드','2024-04-05 20:15:00.000000',665000.00,4,4,4),(5,'계좌이체','2024-05-25 22:00:00.000000',390000.00,5,5,5);
 UNLOCK TABLES;
 --=============
 -- 호텔 도시 필수값으로 지정
