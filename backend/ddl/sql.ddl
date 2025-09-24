@@ -171,13 +171,43 @@ CREATE TABLE `room` (
                         PRIMARY KEY (`id`),
                         KEY `FK_room_to_hotel` (`hotel_id`),
                         CONSTRAINT `FK_room_to_hotel` FOREIGN KEY (`hotel_id`) REFERENCES `hotel` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `room`
 --
 LOCK TABLES `room` WRITE;
-INSERT INTO `room` VALUES (6,'더블',2,'디럭스 룸',300000.00,'101','시티 뷰',1),(7,'킹',3,'스위트 룸',450000.00,'202','오션 뷰',2),(8,'트윈',4,'패밀리 룸',250000.00,'303','가든 뷰',3),(9,'퀸',2,'이그제큐티브 룸',350000.00,'404','파크 뷰',4),(10,'싱글',1,'스탠다드 룸',200000.00,'505','마운틴 뷰',5);
+INSERT INTO `room` (`bed`, `max_guests`, `name`, `price`, `room_number`, `view`, `hotel_id`) VALUES
+-- Hotel 1 Rooms
+('더블 베드', 2, '스탠다드 룸', 250000.00, '101', '시티 뷰', 1),
+('킹 베드', 2, '디럭스 룸', 350000.00, '102', '시티 뷰', 1),
+('트윈 베드', 2, '스탠다드 트윈', 270000.00, '103', '가든 뷰', 1),
+('킹 베드', 3, '주니어 스위트', 500000.00, '104', '시티 뷰', 1),
+
+-- Hotel 2 Rooms
+('더블 베드', 2, '스탠다드 오션', 300000.00, '201', '오션 뷰', 2),
+('킹 베드', 2, '디럭스 오션', 400000.00, '202', '오션 뷰', 2),
+('더블 베드 2개', 4, '패밀리 스위트', 550000.00, '203', '오션 뷰', 2),
+('킹 베드', 3, '프리미어 스위트', 700000.00, '204', '파노라마 오션 뷰', 2),
+
+-- Hotel 3 Rooms
+('퀸 베드', 2, '슈페리어 룸', 220000.00, '301', '마운틴 뷰', 3),
+('킹 베드', 2, '디럭스 룸', 300000.00, '302', '마운틴 뷰', 3),
+('트윈 베드', 4, '패밀리 룸', 380000.00, '303', '가든 뷰', 3),
+('킹 베드', 2, '이그제큐티브 룸', 450000.00, '304', '마운틴 뷰', 3),
+
+-- Hotel 4 Rooms
+('더블 베드', 2, '게스트 룸', 180000.00, '401', '시티 뷰', 4),
+('킹 베드', 3, '스위트 룸', 280000.00, '402', '파크 뷰', 4),
+('트윈 베드 2개', 4, '커넥팅 룸', 350000.00, '403', '시티 뷰', 4),
+('킹 베드', 4, '펜트하우스', 800000.00, '404', '스카이라인 뷰', 4),
+
+-- Hotel 5 Rooms
+('싱글 베드', 1, '스탠다드 싱글', 150000.00, '501', '가든 뷰', 5),
+('더블 베드', 2, '스탠다드 더블', 200000.00, '502', '가든 뷰', 5),
+('트윈 베드', 3, '디럭스 트윈', 280000.00, '503', '풀 뷰', 5),
+('킹 베드', 2, '스위트 룸', 400000.00, '504', '풀 뷰', 5);
+
 UNLOCK TABLES;
 
 
@@ -199,7 +229,12 @@ CREATE TABLE `hotel_image` (
 -- Dumping data for table `hotel_image`
 --
 LOCK TABLES `hotel_image` WRITE;
-INSERT INTO `hotel_image` VALUES (1,'http://example.com/images/shilla_hotel_1.jpg',1,1024,1),(2,'http://example.com/images/paradise_busan_1.jpg',1,2048,2),(3,'http://example.com/images/lotte_jeju_1.jpg',1,1536,3),(4,'http://example.com/images/gyeongwonjae_incheon_1.jpg',1,1280,4),(5,'http://example.com/images/hilton_gyeongju_1.jpg',1,1800,5);
+INSERT INTO `hotel_image` (`image_url`, `sequence`, `size`, `hotel_id`) VALUES
+                                                                            ('/images/hotel1/hotel1_main.png', 1, 1024, 1),
+                                                                            ('/images/hotel2/hotel2_main.png', 1, 1024, 2),
+                                                                            ('/images/hotel3/hotel3_main.png', 1, 1024, 3),
+                                                                            ('/images/hotel4/hotel4_main.png', 1, 1024, 4),
+                                                                            ('/images/hotel5/hotel5_main.png', 1, 1024, 5);
 UNLOCK TABLES;
 
 
@@ -316,7 +351,7 @@ CREATE TABLE `reservation` (
 -- Dumping data for table `reservation`
 --
 LOCK TABLES `reservation` WRITE;
-INSERT INTO `reservation` VALUES (6,'2024-01-10','2024-01-12',50000.00,25000.00,575000.00,6,1),(7,'2024-02-15','2024-02-18',100000.00,50000.00,1200000.00,7,2),(8,'2024-03-20','2024-03-22',30000.00,15000.00,485000.00,8,3),(9,'2024-04-05','2024-04-07',70000.00,35000.00,665000.00,9,4),(10,'2024-05-25','2024-05-27',20000.00,10000.00,390000.00,10,5);
+INSERT INTO `reservation` VALUES (6,'2024-01-10','2024-01-12',50000.00,25000.00,575000.00,1,1),(7,'2024-02-15','2024-02-18',100000.00,50000.00,1200000.00,2,2),(8,'2024-03-20','2024-03-22',30000.00,15000.00,485000.00,3,3),(9,'2024-04-05','2024-04-07',70000.00,35000.00,665000.00,4,4),(10,'2024-05-25','2024-05-27',20000.00,10000.00,390000.00,5,5);
 UNLOCK TABLES;
 
 
@@ -384,23 +419,46 @@ CREATE TABLE `room_img` (
                             PRIMARY KEY (`id`),
                             KEY `FK_room_img_room` (`room_id`),
                             CONSTRAINT `FK_room_img_room` FOREIGN KEY (`room_id`) REFERENCES `room` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `room_img`
 --
+-- 참고: 이 스크립트는 'room' 테이블이 비워진 상태에서
+-- Canvas의 'room_data.sql' 스크립트를 실행하여 room ID가 1부터 20까지 생성되었다고 가정합니다.
+-- 만약 실제 room ID가 다르다면, 아래 'room_id' 값을 직접 수정해주세요.
+--
 LOCK TABLES `room_img` WRITE;
-INSERT INTO `room_img` VALUES
-                           (1,'https://example.com/images/room1_1.jpg',1024,6),
-                           (2,'https://example.com/images/room1_2.jpg',2048,6),
-                           (3,'https://example.com/images/room2_1.jpg',1536,7),
-                           (4,'https://example.com/images/room2_2.jpg',1024,7),
-                           (5,'https://example.com/images/room3_1.jpg',2048,8),
-                           (6,'https://example.com/images/room3_2.jpg',512,8),
-                           (7,'https://example.com/images/room4_1.jpg',1024,9),
-                           (8,'https://example.com/images/room4_2.jpg',512,9),
-                           (9,'https://example.com/images/room5_1.jpg',1024,10),
-                           (10,'https://example.com/images/room5_2.jpg',2048,10);
+INSERT INTO `room_img` (`image_url`, `size`, `room_id`) VALUES
+-- Hotel 1 Room Images (Room IDs: 1-4)
+('/images/hotel1/hotel1_room1.png', 1024, 1),
+('/images/hotel1/hotel1_room2.png', 1024, 2),
+('/images/hotel1/hotel1_room3.png', 1024, 3),
+('/images/hotel1/hotel1_room4.png', 1024, 4),
+
+-- Hotel 2 Room Images (Room IDs: 5-8)
+('/images/hotel2/hotel2_room1.png', 1024, 5),
+('/images/hotel2/hotel2_room2.png', 1024, 6),
+('/images/hotel2/hotel2_room3.png', 1024, 7),
+('/images/hotel2/hotel2_room4.png', 1024, 8),
+
+-- Hotel 3 Room Images (Room IDs: 9-12)
+('/images/hotel3/hotel3_room1.png', 1024, 9),
+('/images/hotel3/hotel3_room2.png', 1024, 10),
+('/images/hotel3/hotel3_room3.png', 1024, 11),
+('/images/hotel3/hotel3_room4.png', 1024, 12),
+
+-- Hotel 4 Room Images (Room IDs: 13-16)
+('/images/hotel4/hotel4_room1.png', 1024, 13),
+('/images/hotel4/hotel4_room2.png', 1024, 14),
+('/images/hotel4/hotel4_room3.png', 1024, 15),
+('/images/hotel4/hotel4_room4.png', 1024, 16),
+
+-- Hotel 5 Room Images (Room IDs: 17-20)
+('/images/hotel5/hotel5_room1.png', 1024, 17),
+('/images/hotel5/hotel5_room2.png', 1024, 18),
+('/images/hotel5/hotel5_room3.png', 1024, 19),
+('/images/hotel5/hotel5_room4.png', 1024, 20);
 UNLOCK TABLES;
 --=============
 -- 호텔 도시 필수값으로 지정
