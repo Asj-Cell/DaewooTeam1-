@@ -4,8 +4,8 @@ spring:
   mail:
     host: smtp.naver.com
     port: 587
-    username: "${SPRING_MAIL_USERNAME}"
-    password: "${SPRING_MAIL_PASSWORD}"
+    username: "${SPRING_MAIL_USERNAME}" # .env 파일의 값을 불러옴
+    password: "${SPRING_MAIL_PASSWORD}" # .env 파일의 값을 불러옴
     properties:
       mail:
         smtp:
@@ -15,12 +15,11 @@ spring:
           ssl:
             trust: smtp.naver.com
             protocols: TLSv1.2
-  # ▲▲▲▲▲ 여기까지 수정 ▲▲▲▲▲
 server:
   port: 8888
 
 jwt:
   secret:
-    key: a2F카오디오a2FkaW9kaW9kaW9kaW9kaW9kaW9kaW9kaW9kaW9kaW9kaW9kaW9kaW9kaW9kaW9kaW9kaW9kaW9kaW9kaW9kaW9kaQ==
+    key: "${JWT_SECRET_KEY}"
   token:
     expiration-time: 3600000 # 1시간 (밀리초 단위)
