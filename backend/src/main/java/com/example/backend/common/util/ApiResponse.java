@@ -5,20 +5,20 @@ import lombok.Getter;
 @Getter
 public class ApiResponse <T>{
     private final boolean success;
-    private final T data;
+    private final T content;
     private final String message;
 
     // 성공 시 생성자
-    private ApiResponse(boolean success, T data, String message) {
+    private ApiResponse(boolean success, T content, String message) {
         this.success = success;
-        this.data = data;
+        this.content = content;
         this.message = message;
     }
 
     // 실패 시 생성자
     private ApiResponse(boolean success, String message) {
         this.success = success;
-        this.data = null;
+        this.content = null;
         this.message = message;
     }
 

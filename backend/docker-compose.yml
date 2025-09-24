@@ -1,38 +1,37 @@
-#version: '3.8'
+version: '3.8'
 services:
   mariadb:
     container_name: mariadb_container
     image: mariadb
     ports:
-      - 13306:3306
+      - "13306:3306"
     volumes:
       - ./mydata:/var/lib/mysql
     environment:
-      - TZ= Asia/Seoul
-      - MARIADB_ROOT_PASSWORD=1234
-      - MARIADB_DATABASE=booking_db
-      - MARIADB_USER=book_user
-      - MARIADB_PASSWORD=book_1234
+      - TZ=Asia/Seoul
+      # .env 파일의 DB 관련 변수를 참조합니다.
+      - MARIADB_ROOT_PASSWORD=${MARIADB_ROOT_PASSWORD}
+      - MARIADB_DATABASE=${MARIADB_DATABASE}
+      - MARIADB_USER=${MARIADB_USER}
+      - MARIADB_PASSWORD=${MARIADB_PASSWORD}
     networks:
       - mjc_network
-#    restart: always
 
   boot-app:
-    image: asjcell/backend_image:v1.0.0
-#    build:
-#      context: ./
-#      dockerfile: dockerfile
+    image: asjcell/backend_image:v1.0.2
     container_name: boot_container
     ports:
-      - 18888:8888
+      - "18888:8888"
     environment:
       SPRING_PROFILES_ACTIVE: prod
       TZ: Asia/Seoul
+      # .env 파일의 Naver 메일 관련 변수를 참조합니다.
+      SPRING_MAIL_USERNAME: "${SPRING_MAIL_USERNAME}"
+      SPRING_MAIL_PASSWORD: "${SPRING_MAIL_PASSWORD}"
     depends_on:
       - mariadb
     networks:
       - mjc_network
-#    restart: always
 
 networks:
   mjc_network:
