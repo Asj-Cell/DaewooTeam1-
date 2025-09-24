@@ -39,24 +39,40 @@ DROP TABLE IF EXISTS `user`;
 --
 -- Table structure for table `user`
 --
+DROP TABLE IF EXISTS `user`; -- 기존 테이블이 있다면 삭제하고 다시 생성
+
 CREATE TABLE `user` (
                         `id` bigint(20) NOT NULL AUTO_INCREMENT,
-                        `address` varchar(100) DEFAULT NULL,
-                        `background_image_url` varchar(255) DEFAULT NULL,
-                        `birth_date` date DEFAULT NULL,
+                        `user_name` varchar(100) NOT NULL,
                         `email` varchar(100) NOT NULL,
-                        `image_url` varchar(255) DEFAULT NULL,
                         `password` varchar(100) NOT NULL,
                         `phone_number` varchar(100) NOT NULL,
-                        `user_name` varchar(100) NOT NULL,
-                        PRIMARY KEY (`id`)
+                        `address` varchar(100) DEFAULT NULL,
+                        `birth_date` date DEFAULT NULL,
+                        `image_url` varchar(255) DEFAULT NULL,
+                        `background_image_url` varchar(255) DEFAULT NULL,
+                        `verification_code` varchar(255) DEFAULT NULL, -- 이메일 인증 코드
+                        `enabled` bit(1) NOT NULL DEFAULT b'0',        -- 계정 활성화 여부
+                        `reset_token` varchar(255) DEFAULT NULL,       -- 비밀번호 재설정 토큰
+                        `reset_token_expiry` datetime(6) DEFAULT NULL, -- 재설정 토큰 만료 시간
+                        PRIMARY KEY (`id`),
+                        UNIQUE KEY `UK_email` (`email`)                -- 이메일 중복 방지
 ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `user`
 --
 LOCK TABLES `user` WRITE;
-INSERT INTO `user` VALUES (1,'서울시 강남구','http://example.com/images/minjun_bg.jpg','1990-01-15','minjun.kim@example.com','http://example.com/images/minjun.jpg','password123','010-1234-5678','김민준'),(2,'부산시 해운대구','http://example.com/images/seoyeon_bg.jpg','1992-05-20','seoyeon.lee@example.com','http://example.com/images/seoyeon.jpg','password456','010-2345-6789','이서연'),(3,'인천시 연수구','http://example.com/images/junho_bg.jpg','1988-08-10','junho.park@example.com','http://example.com/images/junho.jpg','password789','010-3456-7890','박준호'),(4,'대구시 수성구','http://example.com/images/jiwoo_bg.jpg','1995-11-25','jiwoo.choi@example.com','http://example.com/images/jiwoo.jpg','password101','010-4567-8901','최지우'),(5,'광주시 서구','http://example.com/images/yujin_bg.jpg','1998-03-30','yujin.jung@example.com','http://example.com/images/yujin.jpg','password202','010-5678-9012','정유진');
+-- 비밀번호는 'password123'을 BCrypt로 암호화한 예시 값입니다.
+-- enabled는 '1' (true)로 설정하여 바로 로그인 테스트를 할 수 있도록 했습니다.
+INSERT INTO `user` (`id`, `user_name`, `email`, `password`, `phone_number`, `address`, `birth_date`, `image_url`, `background_image_url`, `enabled`)
+VALUES
+    (1,'김민준','minjun.kim@example.com','$2a$10$E.mWM8vu38a6a5D202b.Oue26a20bX.Jg28g2g2f2g2h2h2i2i2j2','010-1234-5678','서울시 강남구','1990-01-15','http://example.com/images/minjun.jpg','http://example.com/images/minjun_bg.jpg',1),
+    (2,'이서연','seoyeon.lee@example.com','$2a$10$E.mWM8vu38a6a5D202b.Oue26a20bX.Jg28g2g2f2g2h2h2i2i2j2','010-2345-6789','부산시 해운대구','1992-05-20','http://example.com/images/seoyeon.jpg','http://example.com/images/seoyeon_bg.jpg',1),
+    (3,'박준호','junho.park@example.com','$2a$10$E.mWM8vu38a6a5D202b.Oue26a20bX.Jg28g2g2f2g2h2h2i2i2j2','010-3456-7890','인천시 연수구','1988-08-10','http://example.com/images/junho.jpg','http://example.com/images/junho_bg.jpg',1),
+    (4,'최지우','jiwoo.choi@example.com','$2a$10$E.mWM8vu38a6a5D202b.Oue26a20bX.Jg28g2g2f2g2h2h2i2i2j2','010-4567-8901','대구시 수성구','1995-11-25','http://example.com/images/jiwoo.jpg','http://example.com/images/jiwoo_bg.jpg',1),
+    (5,'정유진','yujin.jung@example.com','$2a$10$E.mWM8vu38a6a5D202b.Oue26a20bX.Jg28g2g2f2g2h2h2i2i2j2','010-5678-9012','광주시 서구','1998-03-30','http://example.com/images/yujin.jpg','http://example.com/images/yujin_bg.jpg',1);
+
 UNLOCK TABLES;
 
 
