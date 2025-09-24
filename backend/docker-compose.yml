@@ -19,7 +19,7 @@ services:
 
   boot-app:
     image: asjcell/backend_image:v1.0.5
-    build: .
+#    build: .
     container_name: boot_container
     ports:
       - "18888:8888"
