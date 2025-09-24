@@ -31,12 +31,10 @@ public class HotelFiltersService {
     private final ReviewRepository reviewRepository;
     private final FavoritesRepository favoritesRepository;
 
-    public Page<HotelDto> filterHotels(HotelFilterRequestDto request, Pageable pageable) {
+    public Page<HotelDto> filterHotels(HotelFilterRequestDto request, Pageable pageable, Long loginUserId) {
         // 1. Specification으로 DB에서 필터 적용, 전체 조회
         Specification<Hotel> spec = HotelSpecifications.withFilters(request);
         List<Hotel> hotels = hotelRepository.findAll(spec);
-
-        Long loginUserId = (request.getLoginUser() != null) ? request.getLoginUser().getUserId() : null;
 
         // 2. DTO 변환 + Stream 필터 + 정렬
         List<HotelDto> sortedDtos = hotels.stream()
@@ -46,8 +44,8 @@ public class HotelFiltersService {
                     long reviewCount = reviewRepository.countByHotelId(h.getId());
                     double avgRating = (totalRating != null && reviewCount > 0) ? totalRating / reviewCount : 0.0;
 
-                    boolean isFavorite = (loginUserId != null) &&
-                            favoritesRepository.existsByUser_IdAndHotel_Id(loginUserId, h.getId());
+
+                    boolean isFavorite = (loginUserId != null) && favoritesRepository.existsByUser_IdAndHotel_Id(loginUserId, h.getId());
 
                     List<String> hotelImageUrls = h.getImages().stream()
                             .map(HotelImage::getImageUrl)

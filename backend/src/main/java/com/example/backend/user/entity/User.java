@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -45,6 +46,18 @@ public class User {
 
     @Column(name = "background_image_url",length = 255)
     private String backGroundImageUrl;
+
+    @Column(name = "verification_code")
+    private String verificationCode; // 이메일 인증 코드
+
+    @Column(name = "enabled")
+    private boolean enabled = false; // 계정 활성화 상태
+
+    @Column(name = "reset_token")
+    private String resetToken; // 비밀번호 재설정 토큰
+
+    @Column(name = "reset_token_expiry")
+    private LocalDateTime resetTokenExpiry; // 재설정 토큰 만료 시간
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL,orphanRemoval = true)
     private List<Review> reviews = new ArrayList<>();
