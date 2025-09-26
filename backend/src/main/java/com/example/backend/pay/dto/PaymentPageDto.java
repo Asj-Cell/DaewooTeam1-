@@ -1,4 +1,3 @@
-// package는 com.example.backend.pay.dto 등 적절한 위치에 만들어주세요.
 package com.example.backend.pay.dto;
 
 import lombok.Builder;
@@ -7,6 +6,7 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 
 @Getter
+@Builder
 public class PaymentPageDto {
     private final String hotelName;
     private final String roomName;
@@ -17,7 +17,6 @@ public class PaymentPageDto {
     private final long reviewCount;
     private final double avgRating;
 
-    @Builder
     public PaymentPageDto(String hotelName, String roomName, LocalDate checkInDate,
                           LocalDate checkoutDate, long nights, BigDecimal totalPrice, // <<-- 수정된 부분
                           long reviewCount, double avgRating) {
