@@ -10,6 +10,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -38,17 +39,17 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
+                // 1. CORS 설정 활성화
+                .cors(Customizer.withDefaults())
                 .csrf(csrf -> csrf.disable())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
+                        // 2. Preflight OPTIONS 요청은 인증 없이 허용
+                        .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/hotels/*/reviews/**").permitAll()
                         .requestMatchers(
                                 // 일반 인증 관련 public 엔드포인트
-                                "/api/auth/signup",
-                                "/api/auth/login",
-                                "/api/auth/forgot-password",
-                                "/api/auth/verify-code",
-                                "/api/auth/reset-password",
+                                "/api/auth/**", // /api/auth/logout도 포함되므로 명시적으로 분리할 필요 없음
                                 // 소셜 로그인 관련 public 엔드포인트
                                 "/login/oauth2/**",
                                 // Swagger 및 기타 public 엔드포인트
@@ -57,6 +58,7 @@ public class SecurityConfig {
                                 "/api/travel-packages/**",
                                 "/api/hotels/filter",
                                 "/api/hotels/detail/**",
+                                "/uploads/**", // 업로드된 이미지 경로 허용
                                 "/images/**"
                         ).permitAll()
                         .anyRequest().authenticated()
@@ -68,22 +70,21 @@ public class SecurityConfig {
                         )
                 )
                 .logout(logout -> logout
-                                .logoutUrl("/api/auth/logout")
-                                .logoutSuccessHandler((request, response, authentication) -> {
-                                    response.setStatus(HttpServletResponse.SC_OK);
-                                    response.setContentType(MediaType.APPLICATION_JSON_VALUE);
-                                    response.setCharacterEncoding(StandardCharsets.UTF_8.name());
+                        .logoutUrl("/api/auth/logout")
+                        .logoutSuccessHandler((request, response, authentication) -> {
+                            response.setStatus(HttpServletResponse.SC_OK);
+                            response.setContentType(MediaType.APPLICATION_JSON_VALUE);
+                            response.setCharacterEncoding(StandardCharsets.UTF_8.name());
 
-                                    // ApiResponse 객체를 사용하여 성공 응답 생성
-                                    ApiResponse<String> successResponse = ApiResponse.success("성공적으로 로그아웃되었습니다.");
+                            // ApiResponse 객체를 사용하여 성공 응답 생성
+                            ApiResponse<String> successResponse = ApiResponse.success("성공적으로 로그아웃되었습니다.");
 
-                                    // ObjectMapper를 사용하여 JSON 문자열로 변환 후 응답 본문에 작성
-                                    objectMapper.writeValue(response.getWriter(), successResponse);
-                                })
+                            // ObjectMapper를 사용하여 JSON 문자열로 변환 후 응답 본문에 작성
+                            objectMapper.writeValue(response.getWriter(), successResponse);
+                        })
                 )
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
     }
 }
-
