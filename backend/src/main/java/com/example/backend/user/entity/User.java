@@ -26,13 +26,19 @@ public class User {
     @Column(name = "user_name",nullable = false, length = 100)
     private String userName;
 
-    @Column(name = "email",nullable = false, length = 100)
+    @Column(name = "email",nullable = false, length = 100, unique = true)
     private String email;
 
-    @Column(name = "password",nullable = false, length = 100)
+    @Column(name = "password", length = 100)
     private String password;
 
-    @Column(name = "phone_number",nullable = false, length = 100)
+    @Column(name = "provider")
+    private String provider; // 예: "google", "facebook"
+
+    @Column(name = "provider_id")
+    private String providerId;
+
+    @Column(name = "phone_number", length = 100)
     private String phoneNumber;
 
     @Column(name = "address",length = 100)
@@ -47,8 +53,8 @@ public class User {
     @Column(name = "background_image_url",length = 255)
     private String backGroundImageUrl;
 
-    @Column(name = "verification_code")
-    private String verificationCode; // 이메일 인증 코드
+    // @Column(name = "verification_code")
+    // private String verificationCode; // <-- 이 부분을 주석 처리하거나 삭제합니다.
 
     @Column(name = "enabled")
     private boolean enabled = false; // 계정 활성화 상태

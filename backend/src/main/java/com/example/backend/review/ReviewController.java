@@ -16,7 +16,6 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
-@Tag(name = "Review API", description = "리뷰 관련 API")
 @RestController
 @RequestMapping("/api/hotels/{hotelId}/reviews")
 @RequiredArgsConstructor
