@@ -1,9 +1,4 @@
--- 1. 데이터베이스 생성 및 사용자 권한 설정
-CREATE DATABASE IF NOT EXISTS `booking_db` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
-CREATE USER IF NOT EXISTS 'user'@'localhost' IDENTIFIED BY '1234';
-GRANT ALL PRIVILEGES ON booking_db.* TO 'user'@'localhost';
-FLUSH PRIVILEGES;
-
+-- Docker 환경 변수가 데이터베이스와 사용자를 생성하므로, 여기서는 USE 문만 사용합니다.
 USE `booking_db`;
 
 -- 2. 테이블 초기화 (참조 관계의 역순으로 삭제)
@@ -31,13 +26,15 @@ CREATE TABLE `user` (
                         `id` bigint(20) NOT NULL AUTO_INCREMENT,
                         `user_name` varchar(100) NOT NULL,
                         `email` varchar(100) NOT NULL,
-                        `password` varchar(100) NOT NULL,
-                        `phone_number` varchar(100) NOT NULL,
+                        `password` varchar(100) DEFAULT NULL,
+                        `phone_number` varchar(100) DEFAULT NULL,
+                        `provider` varchar(255) DEFAULT NULL,
+                        `provider_id` varchar(255) DEFAULT NULL,
                         `address` varchar(100) DEFAULT NULL,
                         `birth_date` date DEFAULT NULL,
                         `image_url` varchar(255) DEFAULT NULL,
                         `background_image_url` varchar(255) DEFAULT NULL,
-                        `enabled` bit(1) NOT NULL DEFAULT b'1', -- 기본값을 활성화(1)로 변경
+                        `enabled` bit(1) NOT NULL DEFAULT b'1',
                         `reset_token` varchar(255) DEFAULT NULL,
                         `reset_token_expiry` datetime(6) DEFAULT NULL,
                         PRIMARY KEY (`id`),
@@ -62,7 +59,7 @@ CREATE TABLE `hotel` (
                          `address` varchar(100) NOT NULL,
                          `checkin_time` time(6) NOT NULL,
                          `checkout_time` time(6) NOT NULL,
-                         `city_id` bigint(20) NOT NULL, -- NOT NULL 제약조건 추가
+                         `city_id` bigint(20) NOT NULL,
                          PRIMARY KEY (`id`),
                          KEY `FK_hotel_to_city` (`city_id`),
                          CONSTRAINT `FK_hotel_to_city` FOREIGN KEY (`city_id`) REFERENCES `city` (`id`)
@@ -243,7 +240,6 @@ CREATE TABLE `pay` (
 -- 4. 데이터 삽입 (DML)
 
 -- 사용자 데이터
--- 비밀번호는 모두 '1234'를 BCrypt로 암호화한 값입니다: $2a$10$E/a3J5..L27GjQW3.p2yC.i2u.j5.a1b.c1d.e1f.g1h
 LOCK TABLES `user` WRITE;
 INSERT INTO `user` (`id`, `user_name`, `email`, `password`, `phone_number`, `address`, `birth_date`, `image_url`, `background_image_url`)
 VALUES
@@ -254,14 +250,14 @@ VALUES
     (5, '정유진', 'yujin.jung@example.com', '$2a$10$E/a3J5..L27GjQW3.p2yC.i2u.j5.a1b.c1d.e1f.g1h', '010-5678-9012', '광주시 서구', '1998-03-30', '/uploads/profile5.png', '/uploads/bg5.png');
 UNLOCK TABLES;
 
--- 도시 데이터 (해외 도시 추가)
+-- 도시 데이터
 LOCK TABLES `city` WRITE;
 INSERT INTO `city` (`id`, `city_name`) VALUES
                                            (1, '서울'), (2, '부산'), (3, '제주'), (4, '인천'), (5, '경주'),
                                            (6, '파리'), (7, '런던'), (8, '도쿄'), (9, '뉴욕'), (10, '방콕');
 UNLOCK TABLES;
 
--- 호텔 데이터 (도시 ID와 매칭)
+-- 호텔 데이터
 LOCK TABLES `hotel` WRITE;
 INSERT INTO `hotel` (`id`, `name`, `grade`, `overview`, `latitude`, `longitude`, `address`, `checkin_time`, `checkout_time`, `city_id`) VALUES
                                                                                                                                             (1, '신라호텔', 5, '최고급 서비스와 시설', 37.5558, 127.0053, '서울시 중구 동호로 249', '15:00:00', '12:00:00', 1),
@@ -326,7 +322,7 @@ INSERT INTO `hotel_image` (`id`, `image_url`, `sequence`, `size`, `hotel_id`) VA
                                                                                   (15, '/images/hotel8/main.png', 1, 1024, 8), (16, '/images/hotel8/sub1.png', 2, 512, 8);
 UNLOCK TABLES;
 
--- 여행 패키지 데이터 (논리적으로 city와 매칭)
+-- 여행 패키지 데이터
 LOCK TABLES `travel_package` WRITE;
 INSERT INTO `travel_package` (`id`, `title`, `description`, `price`, `st_date`, `end_date`, `city_id`) VALUES
                                                                                                            (1, '서울 2박 3일 시티 투어', '서울의 주요 관광지인 경복궁, 명동, N서울타워를 둘러보는 알찬 패키지입니다.', 350000.00, '2025-10-10', '2025-10-12', 1),
@@ -337,9 +333,7 @@ INSERT INTO `travel_package` (`id`, `title`, `description`, `price`, `st_date`, 
                                                                                                            (6, '도쿄 3박 4일 미식 탐방', '츠키지 시장, 시부야, 신주쿠의 유명 맛집을 탐방하며 도쿄의 맛을 즐기는 여행입니다.', 950000.00, '2026-03-12', '2026-03-15', 8);
 UNLOCK TABLES;
 
--- ▼▼▼▼▼ 여기부터 데이터 추가 ▼▼▼▼▼
-
--- 패키지 이미지 데이터 (패키지 ID와 매칭)
+-- 패키지 이미지 데이터
 LOCK TABLES `package_image` WRITE;
 INSERT INTO `package_image` (`id`, `image_url`, `package_id`) VALUES
                                                                   (1, '/images/package1/package1_1.png', 1), (2, '/images/package1/package1_2.png', 1),
@@ -397,6 +391,3 @@ INSERT INTO `pay` (`id`, `reservation_id`, `payment_id`, `user_id`, `payment_gat
                                                                                                               (4, 4, 4, 4, '신용카드', '2026-01-20 20:15:00', 1713000.00),
                                                                                                               (5, 5, 5, 5, '계좌이체', '2026-02-20 22:00:00', 1848000.00);
 UNLOCK TABLES;
-
--- ▲▲▲▲▲ 여기까지 데이터 추가 ▲▲▲▲▲
-
