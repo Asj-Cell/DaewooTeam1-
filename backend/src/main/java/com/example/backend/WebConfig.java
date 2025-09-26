@@ -11,10 +11,12 @@ public class WebConfig implements WebMvcConfigurer {
     @Override
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**")
-                .allowedOrigins("*") // allow all domains
-                .allowedMethods("*") // allow all methods
-                .allowedHeaders("*"); // allow all headers
+                .allowedOriginPatterns("*")   // Spring Boot 2.4+ 에서 권장
+                .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
+                .allowedHeaders("*")
+                .allowCredentials(true);      // 쿠키/Authorization 헤더 사용 시 필요
     }
+
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
