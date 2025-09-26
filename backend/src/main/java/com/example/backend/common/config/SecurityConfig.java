@@ -1,10 +1,12 @@
 // SecurityConfig.java
 package com.example.backend.common.config;
 
+import com.example.backend.auth.oauth.CustomOAuth2UserService;
+import com.example.backend.auth.oauth.OAuth2LoginSuccessHandler;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpMethod; // HttpMethod import 추가
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -19,6 +21,8 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 public class SecurityConfig {
 
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
+    private final CustomOAuth2UserService customOAuth2UserService;
+    private final OAuth2LoginSuccessHandler oAuth2LoginSuccessHandler;
 
     @Bean
     public PasswordEncoder passwordEncoder() {
@@ -31,8 +35,7 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf.disable())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
-                        // 🔽 이 부분에 리뷰 조회 경로를 추가합니다.
-                        .requestMatchers(HttpMethod.GET, "/api/hotels/*/reviews/**").permitAll() // 특정 호텔의 리뷰 조회 API는 GET 요청에 대해 허용
+                        .requestMatchers(HttpMethod.GET, "/api/hotels/*/reviews/**").permitAll()
                         .requestMatchers(
                                 "/api/auth/**",
                                 "/swagger-ui/**",
@@ -40,9 +43,16 @@ public class SecurityConfig {
                                 "/api/travel-packages/**",
                                 "/api/hotels/filter",
                                 "/api/hotels/detail/**",
-                                "/images/**"
+                                "/images/**",
+                                "/login/oauth2/**" // 소셜 로그인 리디렉션 경로 허용
                         ).permitAll()
                         .anyRequest().authenticated()
+                )
+                .oauth2Login(oauth2 -> oauth2
+                        .successHandler(oAuth2LoginSuccessHandler) // 로그인 성공 시 이 핸들러를 사용
+                        .userInfoEndpoint(userInfo -> userInfo
+                                .userService(customOAuth2UserService) // 사용자 정보를 가져올 때 이 서비스를 사용
+                        )
                 )
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
 

@@ -13,7 +13,6 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
-@Tag(name = "Payment API", description = "결제 관련 API")
 @RestController
 @RequestMapping("/api/payments") // 기본 경로 변경
 @RequiredArgsConstructor
