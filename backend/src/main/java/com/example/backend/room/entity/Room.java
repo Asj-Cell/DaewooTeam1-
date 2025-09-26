@@ -1,7 +1,7 @@
 package com.example.backend.room.entity;
 
 import com.example.backend.hotel.entity.Hotel;
-import com.example.backend.hotel.entity.Reservation;
+import com.example.backend.Reservation.Reservation;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

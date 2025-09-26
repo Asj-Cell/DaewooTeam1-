@@ -1,4 +1,4 @@
-package com.example.backend.hotel.entity;
+package com.example.backend.Reservation;
 
 import com.example.backend.room.entity.Room;
 import com.example.backend.user.entity.User;

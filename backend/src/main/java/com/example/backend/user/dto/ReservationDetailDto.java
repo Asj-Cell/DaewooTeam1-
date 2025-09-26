@@ -1,9 +1,8 @@
 package com.example.backend.user.dto;
-import com.example.backend.hotel.entity.Reservation;
+import com.example.backend.Reservation.Reservation;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalTime;
 

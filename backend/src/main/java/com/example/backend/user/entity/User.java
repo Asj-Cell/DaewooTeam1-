@@ -1,6 +1,6 @@
 package com.example.backend.user.entity;
 
-import com.example.backend.hotel.entity.Reservation;
+import com.example.backend.Reservation.Reservation;
 import com.example.backend.review.entity.Review;
 import jakarta.persistence.*;
 import lombok.Getter;

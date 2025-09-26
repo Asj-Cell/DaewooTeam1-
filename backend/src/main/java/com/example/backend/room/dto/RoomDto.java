@@ -1,6 +1,5 @@
 package com.example.backend.room.dto;
 
-import com.example.backend.room.entity.RoomImg;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
